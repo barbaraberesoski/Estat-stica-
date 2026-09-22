@@ -36,3 +36,8 @@ Baixe a versao mais recente e sem simbolos quebrados:
 **estatistica_inferencial_mirador_v2.pdf** (use este)
 
 Se abrir a versao antiga e ver quadrados, e cache do navegador: baixe o arquivo _v2.
+
+
+## NOVO: Resolucoes Passo a Passo
+
+**resolucoes_passo_a_passo.pdf** — apenas as resolucoes de cada questao, em ordem, com passo a passo tipo 'receita de bolo' (da para responder mesmo sem dominar a materia). Cada questao tem: o que ela pede, a ferramenta/formula a usar e os passos numerados ate a resposta final.

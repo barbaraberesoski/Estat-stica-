@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatística Inferencial — Resoluções Passo a Passo</title>
+<style>
+  :root{ --azul:#1a4b8c; --azul-claro:#2e6cb8; --cinza:#333; --cinza-claro:#f4f6fa;
+    --destaque:#fff8e1; --destaque-borda:#f0c040; --verde:#e8f5e9; --verde-borda:#43a047;
+    --alerta:#ffebee; --alerta-borda:#ef5350; --passo:#eef3fb; }
+  *{box-sizing:border-box;}
+  body{font-family:'Noto Sans',Arial,sans-serif; color:var(--cinza); line-height:1.6; margin:0; font-size:14px;}
+  .page{max-width:820px; margin:0 auto; padding:36px 46px;}
+  h1{color:var(--azul); font-size:28px; margin:0 0 4px; border-bottom:4px solid var(--azul); padding-bottom:10px;}
+  .subtitle{color:#666; font-size:14px; margin-bottom:22px;}
+  h2{color:#fff; background:var(--azul); font-size:20px; margin-top:34px; padding:8px 14px; border-radius:5px;}
+  h3{color:var(--azul); font-size:16px; margin-top:26px; border-bottom:2px solid var(--azul-claro); padding-bottom:5px; page-break-after:avoid;}
+  p{margin:7px 0;}
+  .enunciado{background:#f0f0f0; border-left:4px solid #888; padding:8px 14px; margin:10px 0; font-style:italic; border-radius:4px;}
+  .ferramenta{background:var(--destaque); border-left:4px solid var(--destaque-borda); padding:8px 14px; margin:10px 0; border-radius:4px;}
+  .passo{background:var(--passo); border-left:4px solid var(--azul-claro); padding:8px 14px; margin:8px 0; border-radius:4px;}
+  .passo .num{display:inline-block; background:var(--azul-claro); color:#fff; width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; font-weight:bold; margin-right:8px; font-size:13px;}
+  .resposta{background:var(--verde); border:2px solid var(--verde-borda); padding:10px 14px; margin:12px 0; border-radius:5px; font-weight:600; color:#1b5e20;}
+  .nota{background:#fff; border:1px dashed #bbb; padding:6px 12px; margin:8px 0; font-size:13px; color:#555; border-radius:4px;}
+  sup{font-size:0.72em; vertical-align:super;} sub{font-size:0.72em; vertical-align:sub;}
+  .calc{font-family:Consolas,monospace; background:#f7f7f7; padding:1px 5px; border-radius:3px;}
+  hr{border:none; border-top:1px dashed #ccc; margin:22px 0;}
+  .keep{page-break-inside:avoid;}
+  .toc{background:var(--cinza-claro); border-radius:6px; padding:14px 22px; margin:18px 0; font-size:13px;}
+  .toc b{color:var(--azul);}
+  @media print{ .page{padding:0 10px;} body{font-size:12px;} .no-print{display:none;} }
+  .print-btn{position:fixed; top:16px; right:16px; background:var(--azul); color:#fff; border:none; padding:12px 20px; border-radius:6px; font-size:15px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.2);}
+</style>
+</head>
+<body>
+<button class="print-btn no-print" onclick="window.print()">Salvar como PDF</button>
+<div class="page">
+
+<h1>Resoluções Passo a Passo</h1>
+<p class="subtitle">Estatística Inferencial · Mirador · Prof. Edimilson<br>
+Guia de resolução "receita de bolo": siga os passos numerados e chegue na resposta, mesmo sem dominar a teoria.</p>
+
+<div class="toc keep">
+  <b>Como usar este material:</b> cada questão tem 3 partes:<br>
+  &bull; <b>O que a questão quer</b> (traduzido em palavras simples)<br>
+  &bull; <b>Ferramenta / fórmula</b> a usar (a "chave" da questão)<br>
+  &bull; <b>Passo a passo</b> numerado até a <b>Resposta final</b> (em verde).<br><br>
+  <b>Símbolos usados:</b> <span class="calc">x^2</span> = x ao quadrado &nbsp;|&nbsp; <span class="calc">sqrt</span> = raiz quadrada &nbsp;|&nbsp;
+  <span class="calc">e^(...)</span> = número e (2,718) elevado a algo &nbsp;|&nbsp; <span class="calc">&lt;=</span> menor/igual, <span class="calc">&gt;=</span> maior/igual &nbsp;|&nbsp;
+  &mu; (mi) = média, &sigma; (sigma) = desvio-padrão.
+</div>
+
+<!-- ================= LISTA 1 ================= -->
+<h2>LISTA 1 — Revisão</h2>
+
+<h3 class="keep">Questão 1 — Salários e quartil</h3>
+<div class="enunciado">Empresa A: média salarial $10.000 e 3o quartil = $5.000. (a) Sorteando um salário ao acaso, é mais provável ganhar mais ou menos que $5.000? (b) Empresa B tem média $7.000 e variância quase nula. Em qual empresa se apresentar?</div>
+<div class="ferramenta"><b>Ferramenta:</b> O "3o quartil (Q3)" é o valor que deixa 75% das pessoas abaixo dele. "Variância quase nula" significa que quase todos têm o mesmo valor.</div>
+<div class="passo"><span class="num">1</span> Q3 = 5.000 significa: 75% das pessoas ganham 5.000 ou menos; só 25% ganham mais.</div>
+<div class="passo"><span class="num">2</span> <b>(a)</b> Logo, sorteando ao acaso, é muito mais provável cair no grupo de baixo: <b>ganhar MENOS que $5.000 (75% de chance)</b>.</div>
+<div class="passo"><span class="num">3</span> <b>(b)</b> Na Empresa B a variância é ~0, então quase todos ganham ~$7.000 (garantido). Na Empresa A, mesmo com média $10.000, 75% ganham <= 5.000 (a média é inflada por poucos salários enormes).</div>
+<div class="resposta">Resposta (a): mais provável ganhar MENOS que $5.000. &nbsp;|&nbsp; Resposta (b): escolher a EMPRESA B — quase certamente ganharia ~$7.000, enquanto na A provavelmente ganharia pouco.</div>
+
+<h3 class="keep">Questão 2 — Mexendo nos dados</h3>
+<div class="enunciado">O que acontece com a média e a variância quando: (i) multiplico cada observação por 2? (ii) somo 10 a cada observação?</div>
+<div class="ferramenta"><b>Ferramenta (2 regras):</b> Multiplicar por um número <span class="calc">a</span>: média x a, variância x a<sup>2</sup>. Somar um número: média + esse número, variância NÃO muda.</div>
+<div class="passo"><span class="num">1</span> <b>(i) multiplicar por 2</b> (a = 2): média fica x2 (<b>dobra</b>); variância fica x 2<sup>2</sup> = <b>x4</b>.</div>
+<div class="passo"><span class="num">2</span> <b>(ii) somar 10</b>: média <b>aumenta 10</b>; variância <b>continua igual</b> (somar não muda o espalhamento).</div>
+<div class="resposta">Resposta: (i) média dobra, variância multiplica por 4. (ii) média +10, variância inalterada.</div>
+
+<h3 class="keep">Questão 3 — Escolher a obra (valor esperado)</h3>
+<div class="enunciado">Obra 1: lucro $120.000 com prob. 3/4, ou prejuízo $30.000 com prob. 1/4. Obra 2: lucro $180.000 com prob. 1/2, ou prejuízo $45.000 com prob. 1/2. Qual dá maior lucro esperado?</div>
+<div class="ferramenta"><b>Ferramenta:</b> Lucro esperado = soma de (cada resultado x sua probabilidade). Prejuízo entra com sinal NEGATIVO. Escolha o maior.</div>
+<div class="passo"><span class="num">1</span> Obra 1: <span class="calc">120000 x (3/4) + (-30000) x (1/4)</span> = 90.000 - 7.500 = <b>82.500</b>.</div>
+<div class="passo"><span class="num">2</span> Obra 2: <span class="calc">180000 x (1/2) + (-45000) x (1/2)</span> = 90.000 - 22.500 = <b>67.500</b>.</div>
+<div class="passo"><span class="num">3</span> Comparar: 82.500 &gt; 67.500.</div>
+<div class="resposta">Resposta: escolher a OBRA 1 (lucro esperado de $82.500).</div>
+
+<h3 class="keep">Questão 4 — Fórmula do máximo e do mínimo</h3>
+<div class="enunciado">Amostra X<sub>1</sub>,...,X<sub>n</sub> com acumulada F(x). Ache a acumulada e a densidade do MAIOR valor X<sub>(n)</sub> e do MENOR valor X<sub>(1)</sub>.</div>
+<div class="ferramenta"><b>Ferramenta:</b> Máximo &lt;= x quer dizer TODOS &lt;= x -&gt; multiplica F n vezes. Mínimo &gt; x quer dizer TODOS &gt; x.</div>
+<div class="passo"><span class="num">1</span> <b>Máximo:</b> acumulada = <span class="calc">[F(x)]^n</span>. Derivando, densidade = <span class="calc">n x [F(x)]^(n-1) x f(x)</span>.</div>
+<div class="passo"><span class="num">2</span> <b>Mínimo:</b> acumulada = <span class="calc">1 - [1 - F(x)]^n</span>. Derivando, densidade = <span class="calc">n x [1 - F(x)]^(n-1) x f(x)</span>.</div>
+<div class="resposta">Resposta: Máx: F<sub>(n)</sub>=[F(x)]<sup>n</sup> ; Mín: F<sub>(1)</sub>=1-[1-F(x)]<sup>n</sup> (densidades derivando cada uma).</div>
+
+<h3 class="keep">Questão 5 — Definir FGM (teórica)</h3>
+<div class="enunciado">Defina função geradora de momentos (FGM) de X e cite suas principais propriedades.</div>
+<div class="ferramenta"><b>Ferramenta:</b> É uma pergunta de teoria — basta escrever a definição e a lista de propriedades.</div>
+<div class="passo"><span class="num">1</span> Definição: <b>M(t) = E(e<sup>tX</sup>)</b> (o valor esperado de "e elevado a t vezes X").</div>
+<div class="passo"><span class="num">2</span> Propriedades: (a) derivando e fazendo t=0, gera os momentos: E(X)=M'(0), E(X<sup>2</sup>)=M''(0); (b) é única para cada distribuição (identifica a distribuição); (c) soma de variáveis independentes = produto das FGMs; (d) M<sub>aX+b</sub>(t)=e<sup>bt</sup>M(at); (e) M(0)=1.</div>
+<div class="resposta">Resposta: M(t)=E(e<sup>tX</sup>) + as 5 propriedades acima.</div>
+
+<h3 class="keep">Questão 6 — Descrever 5 distribuições (teórica/tabela)</h3>
+<div class="enunciado">Descreva f(x), E(X), Var(X) e o espaço paramétrico de: Binomial, Poisson, Uniforme, Normal, Exponencial.</div>
+<div class="ferramenta"><b>Ferramenta:</b> É "decoreba" — copie a tabela abaixo.</div>
+<div class="passo"><span class="num">1</span> <b>Binomial(n,&theta;):</b> P(X=x)=C(n,x)&theta;<sup>x</sup>(1-&theta;)<sup>n-x</sup>; E=n&theta;; Var=n&theta;(1-&theta;); n inteiro, 0&lt;=&theta;&lt;=1.</div>
+<div class="passo"><span class="num">2</span> <b>Poisson(&theta;):</b> P(X=x)=e<sup>-&theta;</sup>&theta;<sup>x</sup>/x!; E=&theta;; Var=&theta;; &theta;&gt;0.</div>
+<div class="passo"><span class="num">3</span> <b>Uniforme(0,&theta;):</b> f(x)=1/&theta;; E=&theta;/2; Var=&theta;<sup>2</sup>/12; &theta;&gt;0.</div>
+<div class="passo"><span class="num">4</span> <b>Normal(&mu;,&sigma;<sup>2</sup>):</b> f(x)=(1/sqrt(2&pi;&sigma;<sup>2</sup>))e<sup>-(x-&mu;)^2/2&sigma;^2</sup>; E=&mu;; Var=&sigma;<sup>2</sup>; &mu; real, &sigma;<sup>2</sup>&gt;0.</div>
+<div class="passo"><span class="num">5</span> <b>Exponencial(&beta;), média &beta;:</b> f(x)=(1/&beta;)e<sup>-x/&beta;</sup>; E=&beta;; Var=&beta;<sup>2</sup>; &beta;&gt;0.</div>
+<div class="resposta">Resposta: a tabela dos 5 itens acima.</div>
+
+<h3 class="keep">Questão 8 — Soma de duas Normais</h3>
+<div class="enunciado">Z<sub>1</sub>~N(1000, 200<sup>2</sup>) e Z<sub>2</sub>~N(500, 100<sup>2</sup>), independentes. T=Z<sub>1</sub>+Z<sub>2</sub>. Ache a distribuição de T, E(T), Var(T) e P(T&gt;1700).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Soma de Normais é Normal. Média = soma das médias. Variância = soma das variâncias. Para probabilidade, padronize: Z=(valor - média)/desvio, e use a tabela Z.</div>
+<div class="passo"><span class="num">1</span> Média de T: 1000 + 500 = <b>1500</b>.</div>
+<div class="passo"><span class="num">2</span> Variância de T: 200<sup>2</sup> + 100<sup>2</sup> = 40000 + 10000 = <b>50000</b>. Desvio = sqrt(50000) = <b>223,6</b>.</div>
+<div class="passo"><span class="num">3</span> Então <b>T ~ N(1500, 50000)</b>.</div>
+<div class="passo"><span class="num">4</span> Padronizar 1700: Z = (1700 - 1500)/223,6 = 200/223,6 = <b>0,89</b>.</div>
+<div class="passo"><span class="num">5</span> Na tabela Z: P(Z &lt;= 0,89) = 0,8133. Então P(Z &gt; 0,89) = 1 - 0,8133 = 0,1867.</div>
+<div class="resposta">Resposta: T ~ N(1500, 50000); E(T)=1500; Var(T)=50000; P(T&gt;1700) = 0,1867 (cerca de 18,7%).</div>
+
+<h3 class="keep">Questão 9 — Soma de exponenciais + máximo</h3>
+<div class="enunciado">Y<sub>1</sub> (colisão) média $5.000 e Y<sub>2</sub> (guincho) média $20.000, exponenciais independentes. S=Y<sub>1</sub>+Y<sub>2</sub>. Ache E(S), Var(S). Depois, entre 20 sinistros de colisão, P(o maior &gt; $6.000).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Média da soma = soma das médias. Variância (independentes) = soma das variâncias; para exponencial, Var = média<sup>2</sup>. Para "o maior de 20 passar de X": use 1 - [P(um &lt;= X)]<sup>20</sup>. Na exponencial, P(um &lt;= X) = 1 - e<sup>-X/média</sup>.</div>
+<div class="passo"><span class="num">1</span> E(S) = 5.000 + 20.000 = <b>25.000</b>.</div>
+<div class="passo"><span class="num">2</span> Var(S) = 5000<sup>2</sup> + 20000<sup>2</sup> = 25.000.000 + 400.000.000 = <b>425.000.000</b>.</div>
+<div class="passo"><span class="num">3</span> Para o máximo: P(um sinistro &lt;= 6000) = 1 - e<sup>-6000/5000</sup> = 1 - e<sup>-1,2</sup> = 1 - 0,3012 = <b>0,6988</b>.</div>
+<div class="passo"><span class="num">4</span> P(o maior de 20 &gt; 6000) = 1 - (0,6988)<sup>20</sup>. Calcule (0,6988)<sup>20</sup> = 0,00077.</div>
+<div class="passo"><span class="num">5</span> Então 1 - 0,00077 = 0,9992.</div>
+<div class="resposta">Resposta: E(S)=25.000; Var(S)=425.000.000; P(maior &gt; 6.000) = 0,9992 (praticamente certo).</div>
+
+<h3 class="keep">Questão 10 — Soma de Poissons</h3>
+<div class="enunciado">Sinistros auto N<sub>A</sub>~Poisson(1,8) e residencial N<sub>R</sub>~Poisson(0,7), independentes. N=N<sub>A</sub>+N<sub>R</sub>. Ache a distribuição, E(N), Var(N) e P(N&gt;=4).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Soma de Poissons independentes é Poisson com parâmetro = soma dos parâmetros. Na Poisson, média = variância = parâmetro. P(N=x) = e<sup>-&theta;</sup> &theta;<sup>x</sup>/x!.</div>
+<div class="passo"><span class="num">1</span> Somar parâmetros: 1,8 + 0,7 = 2,5. Então <b>N ~ Poisson(2,5)</b>.</div>
+<div class="passo"><span class="num">2</span> E(N) = Var(N) = <b>2,5</b>.</div>
+<div class="passo"><span class="num">3</span> P(N&gt;=4) = 1 - P(N&lt;=3). Calcule cada termo com &theta;=2,5 (e<sup>-2,5</sup>=0,0821):</div>
+<div class="passo"><span class="num">4</span> P(0)=0,0821 ; P(1)=0,0821x2,5=0,2052 ; P(2)=0,0821x2,5<sup>2</sup>/2=0,2565 ; P(3)=0,0821x2,5<sup>3</sup>/6=0,2138.</div>
+<div class="passo"><span class="num">5</span> Soma P(0..3) = 0,7576. Então P(N&gt;=4) = 1 - 0,7576 = 0,2424.</div>
+<div class="resposta">Resposta: N ~ Poisson(2,5); E(N)=Var(N)=2,5; P(N&gt;=4) = 0,2424 (cerca de 24%).</div>
+
+<!-- ================= LISTA 2 ================= -->
+<h2>LISTA 2 — Distribuições Amostrais e Retenção</h2>
+
+<h3 class="keep">Questão 1 — Média de 36 sinistros (Normal)</h3>
+<div class="enunciado">Sinistros ~ Normal, média $12.000, desvio $3.000. Amostra de 36. (a) Distribuição da média amostral. (b) P(média &gt; $13.000). (c) Interprete.</div>
+<div class="ferramenta"><b>Ferramenta:</b> A média de n dados tem a mesma média &mu;, mas desvio menor: erro-padrão = &sigma;/sqrt(n). Depois padronize e use tabela Z.</div>
+<div class="passo"><span class="num">1</span> Erro-padrão = 3000/sqrt(36) = 3000/6 = <b>500</b>.</div>
+<div class="passo"><span class="num">2</span> <b>(a)</b> Média amostral ~ N(12.000, 500<sup>2</sup>).</div>
+<div class="passo"><span class="num">3</span> <b>(b)</b> Padronizar 13000: Z = (13000 - 12000)/500 = 2,0.</div>
+<div class="passo"><span class="num">4</span> Tabela: P(Z&lt;=2)=0,9772. P(Z&gt;2) = 1 - 0,9772 = 0,0228.</div>
+<div class="passo"><span class="num">5</span> <b>(c)</b> Só ~2,3% de chance da média passar de $13.000. Se acontecer, é sinal de alerta (custo médio subindo).</div>
+<div class="resposta">Resposta: (a) N(12.000, 500<sup>2</sup>); (b) 0,0228; (c) evento raro = alerta na carteira.</div>
+
+<h3 class="keep">Questão 2 — Média de 64 sinistros (TCL)</h3>
+<div class="enunciado">Sinistros exponenciais, média $8.000 (bem assimétricos). Amostra de 64. P(média entre $7.000 e $9.500)? Justifique a aproximação.</div>
+<div class="ferramenta"><b>Ferramenta:</b> Teorema Central do Limite (TCL): se n &gt;= 30, a média amostral vira aproximadamente Normal, mesmo com dados tortos. Na exponencial, desvio = média.</div>
+<div class="passo"><span class="num">1</span> Justificativa: n = 64 &gt;= 30, então pelo TCL a média é aproximadamente Normal.</div>
+<div class="passo"><span class="num">2</span> Desvio = 8000 (na exponencial, desvio = média). Erro-padrão = 8000/sqrt(64) = 8000/8 = <b>1000</b>.</div>
+<div class="passo"><span class="num">3</span> Padronizar os dois limites: Z<sub>1</sub> = (7000-8000)/1000 = -1,0 ; Z<sub>2</sub> = (9500-8000)/1000 = 1,5.</div>
+<div class="passo"><span class="num">4</span> Tabela: P(Z&lt;=1,5)=0,9332 ; P(Z&lt;=-1,0)=0,1587.</div>
+<div class="passo"><span class="num">5</span> Resposta = 0,9332 - 0,1587 = 0,7745.</div>
+<div class="resposta">Resposta: P = 0,7745 (cerca de 77%). Aproximação válida pelo TCL (n=64 &gt;= 30).</div>
+
+<h3 class="keep">Questão 3 — Prêmio médio de 100 apólices</h3>
+<div class="enunciado">Prêmio médio $2.500, desvio $1.200. Amostra de 100. Ache P(|média - &mu;| &lt; 200), isto é, média a menos de $200 do valor verdadeiro.</div>
+<div class="ferramenta"><b>Ferramenta:</b> Erro-padrão = &sigma;/sqrt(n). "|média - &mu;| &lt; 200" vira "|Z| &lt; 200/erro-padrão". Use P(|Z|&lt;z) = 2xTabela(z) - 1.</div>
+<div class="passo"><span class="num">1</span> Erro-padrão = 1200/sqrt(100) = 1200/10 = <b>120</b>.</div>
+<div class="passo"><span class="num">2</span> Transformar: |Z| &lt; 200/120 = <b>1,67</b>.</div>
+<div class="passo"><span class="num">3</span> Tabela: P(Z&lt;=1,67) = 0,9525.</div>
+<div class="passo"><span class="num">4</span> P(|Z|&lt;1,67) = 2 x 0,9525 - 1 = 0,9050.</div>
+<div class="resposta">Resposta: P = 0,9050 (cerca de 90,5%).</div>
+
+<h3 class="keep">Questão 4 — Retenção com Uniforme (máximo)</h3>
+<div class="enunciado">Sinistros ~ Uniforme(0,100) mil. Retenção $80 mil. 5 sinistros. M=maior. (a) P(nenhum passa de 80). (b) P(resseguro acionado ao menos uma vez).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Na Uniforme(0,100), P(um &lt;= x) = x/100. "Nenhum passa" = todos &lt;= 80 = (0,8)<sup>5</sup>. "Ao menos um passa" = 1 - isso.</div>
+<div class="passo"><span class="num">1</span> P(um sinistro &lt;= 80) = 80/100 = 0,8.</div>
+<div class="passo"><span class="num">2</span> <b>(a)</b> P(nenhum passa) = (0,8)<sup>5</sup> = 0,8x0,8x0,8x0,8x0,8 = <b>0,3277</b>.</div>
+<div class="passo"><span class="num">3</span> <b>(b)</b> P(ao menos um passa) = 1 - 0,3277 = <b>0,6723</b>.</div>
+<div class="resposta">Resposta: (a) 0,3277 ; (b) 0,6723.</div>
+
+<h3 class="keep">Questão 5 — Mínimo de 4 exponenciais</h3>
+<div class="enunciado">4 carteiras, tempo até o evento ~ Exponencial, média 50 meses. T<sub>mín</sub> = menor dos 4 tempos. (a) Distribuição de T<sub>mín</sub>. (b) P(nenhum evento nos primeiros 10 meses).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Na exponencial, P(um &gt; t) = e<sup>-t/média</sup>. "Nenhum evento em 10 meses" = todos os tempos &gt; 10. O mínimo de exponenciais também é exponencial (taxas somam).</div>
+<div class="passo"><span class="num">1</span> P(T<sub>mín</sub> &gt; t) = (e<sup>-t/50</sup>)<sup>4</sup> = e<sup>-4t/50</sup> = e<sup>-t/12,5</sup>.</div>
+<div class="passo"><span class="num">2</span> <b>(a)</b> Isso é uma <b>Exponencial de média 12,5 meses</b>.</div>
+<div class="passo"><span class="num">3</span> <b>(b)</b> P(T<sub>mín</sub> &gt; 10) = e<sup>-10/12,5</sup> = e<sup>-0,8</sup> = <b>0,4493</b>.</div>
+<div class="resposta">Resposta: (a) Exponencial de média 12,5 meses ; (b) 0,4493 (cerca de 45%).</div>
+
+<h3 class="keep">Questão 6 — Máximo de Pareto</h3>
+<div class="enunciado">Sinistros ~ Pareto, P(um &gt; x) = (10/x)<sup>3</sup> para x&gt;=10. 20 sinistros. Ache P(o maior &gt; $50 mil) e compare com P(um único &gt; $50 mil).</div>
+<div class="ferramenta"><b>Ferramenta:</b> P(um &gt; 50) já é dado pela fórmula. Para "o maior de 20 &gt; 50": 1 - [P(um &lt;= 50)]<sup>20</sup>, e P(um &lt;= 50) = 1 - P(um &gt; 50).</div>
+<div class="passo"><span class="num">1</span> Um único: P(X &gt; 50) = (10/50)<sup>3</sup> = (0,2)<sup>3</sup> = <b>0,008</b>.</div>
+<div class="passo"><span class="num">2</span> Então P(um &lt;= 50) = 1 - 0,008 = 0,992.</div>
+<div class="passo"><span class="num">3</span> Maior de 20: P(M &gt; 50) = 1 - (0,992)<sup>20</sup> = 1 - 0,8516 = <b>0,1484</b>.</div>
+<div class="passo"><span class="num">4</span> Comparar: 0,1484 (maior de 20) contra 0,008 (um único) = cerca de 18 vezes maior.</div>
+<div class="resposta">Resposta: P(um único) = 0,008 ; P(o maior de 20) = 0,1484 — muito mais provável no conjunto.</div>
+
+<!-- ================= LISTA 3 ================= -->
+<h2>LISTA 3 — Estatística Inferencial (FGM e transformações)</h2>
+
+<h3 class="keep">Questão 1 — Achar a constante &beta;</h3>
+<div class="enunciado">f(x) = &beta;x(4-x) para 0 &lt; x &lt; 4. Determine &beta;.</div>
+<div class="ferramenta"><b>Ferramenta:</b> Toda densidade tem área total = 1. Então integre f de 0 a 4, iguale a 1 e isole &beta;.</div>
+<div class="passo"><span class="num">1</span> Abrir: x(4-x) = 4x - x<sup>2</sup>.</div>
+<div class="passo"><span class="num">2</span> Integrar de 0 a 4: a integral de 4x é 2x<sup>2</sup>; a de x<sup>2</sup> é x<sup>3</sup>/3.</div>
+<div class="passo"><span class="num">3</span> Avaliar em 4: 2(16) - 64/3 = 32 - 21,33 = 32/3 (aprox. 10,67).</div>
+<div class="passo"><span class="num">4</span> Igualar a 1: &beta; x (32/3) = 1, logo &beta; = 3/32.</div>
+<div class="resposta">Resposta: &beta; = 3/32 (aprox. 0,094).</div>
+
+<h3 class="keep">Questão 2 — FGM da Exponencial e variância</h3>
+<div class="enunciado">X ~ Exp(4) (taxa 4). Ache a FGM pela integral e depois Var(X).</div>
+<div class="ferramenta"><b>Ferramenta:</b> FGM = integral de e<sup>tx</sup> f(x) dx. Depois E(X)=M'(0), E(X<sup>2</sup>)=M''(0), Var = E(X<sup>2</sup>) - [E(X)]<sup>2</sup>.</div>
+<div class="passo"><span class="num">1</span> f(x)=4e<sup>-4x</sup>. M(t)=integral de e<sup>tx</sup> 4e<sup>-4x</sup> dx = 4 x integral de e<sup>-(4-t)x</sup> dx = 4/(4-t).</div>
+<div class="passo"><span class="num">2</span> Derivar 1a vez: M'(t)=4/(4-t)<sup>2</sup>. Em t=0: M'(0)=4/16=1/4 -&gt; E(X)=1/4.</div>
+<div class="passo"><span class="num">3</span> Derivar 2a vez: M''(t)=8/(4-t)<sup>3</sup>. Em t=0: M''(0)=8/64=1/8 -&gt; E(X<sup>2</sup>)=1/8.</div>
+<div class="passo"><span class="num">4</span> Var = 1/8 - (1/4)<sup>2</sup> = 1/8 - 1/16 = 1/16.</div>
+<div class="resposta">Resposta: M(t)=4/(4-t) ; E(X)=1/4 ; Var(X)=1/16.</div>
+
+<h3 class="keep">Questão 3 — Probabilidade condicional (tempo de vida)</h3>
+<div class="enunciado">Tempo de vida T ~ Uniforme(0,70). Calcule P(T &gt;= 50 dado que T &gt;= 20).</div>
+<div class="ferramenta"><b>Ferramenta:</b> P(A dado B) = P(A e B)/P(B). Na Uniforme(0,70), P(T &gt;= a) = (70 - a)/70. Como 50&gt;20, "T&gt;=50 e T&gt;=20" é só "T&gt;=50".</div>
+<div class="passo"><span class="num">1</span> P(T &gt;= 50) = (70-50)/70 = 20/70.</div>
+<div class="passo"><span class="num">2</span> P(T &gt;= 20) = (70-20)/70 = 50/70.</div>
+<div class="passo"><span class="num">3</span> Dividir: (20/70)/(50/70) = 20/50 = 0,40.</div>
+<div class="resposta">Resposta: P = 0,40 (40%).</div>
+
+<h3 class="keep">Questão 4 — Provar que é densidade e achar P(X&gt;2)</h3>
+<div class="enunciado">f(x) = k e<sup>-kx</sup> para x&gt;0 (k&gt;0). Mostre que é densidade e calcule P(X&gt;2).</div>
+<div class="ferramenta"><b>Ferramenta:</b> Densidade precisa: (1) ser &gt;=0; (2) integrar 1. Isto é a Exponencial de taxa k, cuja "cauda" é P(X&gt;x)=e<sup>-kx</sup>.</div>
+<div class="passo"><span class="num">1</span> f(x) &gt;= 0? Sim, pois k&gt;0 e e<sup>-kx</sup> é sempre positivo.</div>
+<div class="passo"><span class="num">2</span> Integral de 0 a infinito de k e<sup>-kx</sup> dx = 1 (é o padrão da exponencial). Logo é densidade.</div>
+<div class="passo"><span class="num">3</span> P(X&gt;2) = e<sup>-k x 2</sup> = e<sup>-2k</sup>.</div>
+<div class="resposta">Resposta: é densidade válida ; P(X&gt;2) = e<sup>-2k</sup>.</div>
+
+<h3 class="keep">Questão 5 — Soma de 3 exponenciais iguais</h3>
+<div class="enunciado">X<sub>1</sub>, X<sub>2</sub>, X<sub>3</sub> exponenciais independentes de mesma média. T = X<sub>1</sub>+X<sub>2</sub>+X<sub>3</sub>. Ache a distribuição de T.</div>
+<div class="ferramenta"><b>Ferramenta:</b> Soma de FGMs = produto. FGM da exponencial (média &beta;) = 1/(1-&beta;t). Multiplicar 3 iguais dá potência 3 = distribuição Gama/Erlang.</div>
+<div class="passo"><span class="num">1</span> Cada FGM = 1/(1-&beta;t).</div>
+<div class="passo"><span class="num">2</span> Multiplicar as três: [1/(1-&beta;t)]<sup>3</sup>.</div>
+<div class="passo"><span class="num">3</span> Essa forma é a da Gama com parâmetro de forma 3.</div>
+<div class="resposta">Resposta: T ~ Gama(3, &beta;) = Erlang(3).</div>
+
+<h3 class="keep">Questão 6 — Transformação: virar Weibull</h3>
+<div class="enunciado">X ~ exp(&theta;), Y = X<sup>1/&gamma;</sup>. Ache a densidade de Y.</div>
+<div class="ferramenta"><b>Ferramenta (método receita):</b> 1) escreva P(Y &lt;= y); 2) isole X; 3) use F<sub>X</sub>(x)=1-e<sup>-&theta;x</sup>; 4) derive.</div>
+<div class="passo"><span class="num">1</span> P(Y &lt;= y) = P(X<sup>1/&gamma;</sup> &lt;= y). Elevar tudo a &gamma;: = P(X &lt;= y<sup>&gamma;</sup>).</div>
+<div class="passo"><span class="num">2</span> Substituir: = 1 - e<sup>-&theta;y^&gamma;</sup>.</div>
+<div class="passo"><span class="num">3</span> Derivar em y (a derivada do expoente -&theta;y<sup>&gamma;</sup> é -&theta;&gamma;y<sup>&gamma;-1</sup>).</div>
+<div class="resposta">Resposta: f<sub>Y</sub>(y) = &theta;&gamma; y<sup>&gamma;-1</sup> e<sup>-&theta;y^&gamma;</sup>, y&gt;0 (Weibull).</div>
+
+<h3 class="keep">Questão 7 — Transformação: virar Rayleigh</h3>
+<div class="enunciado">X ~ exp(&theta;), Y = (2X/&theta;)<sup>1/2</sup>. Ache a densidade de Y.</div>
+<div class="ferramenta"><b>Ferramenta:</b> mesma receita. Aqui, elevar ao quadrado para isolar X.</div>
+<div class="passo"><span class="num">1</span> P(Y &lt;= y) = P(2X/&theta; &lt;= y<sup>2</sup>) = P(X &lt;= &theta;y<sup>2</sup>/2).</div>
+<div class="passo"><span class="num">2</span> Substituir: = 1 - e<sup>-&theta; x (&theta;y^2/2)</sup> = 1 - e<sup>-&theta;^2 y^2/2</sup>.</div>
+<div class="passo"><span class="num">3</span> Derivar em y (expoente -&theta;<sup>2</sup>y<sup>2</sup>/2 tem derivada -&theta;<sup>2</sup>y).</div>
+<div class="resposta">Resposta: f<sub>Y</sub>(y) = &theta;<sup>2</sup> y e<sup>-&theta;^2 y^2/2</sup>, y&gt;0 (Rayleigh).</div>
+
+<h3 class="keep">Questão 8 — Transformação: virar Gumbel</h3>
+<div class="enunciado">X ~ exp(1), Y = &alpha; + &gamma; ln(X). Ache a densidade de Y.</div>
+<div class="ferramenta"><b>Ferramenta:</b> mesma receita. Aqui, para isolar X use a exponencial dos dois lados. F<sub>X</sub>(x)=1-e<sup>-x</sup>.</div>
+<div class="passo"><span class="num">1</span> P(Y &lt;= y) = P(&alpha; + &gamma; ln X &lt;= y) = P(ln X &lt;= (y-&alpha;)/&gamma;).</div>
+<div class="passo"><span class="num">2</span> Aplicar e<sup>(...)</sup>: = P(X &lt;= e<sup>(y-&alpha;)/&gamma;</sup>) = 1 - e<sup>-e^((y-&alpha;)/&gamma;)</sup>.</div>
+<div class="passo"><span class="num">3</span> Derivar em y (regra da cadeia dupla).</div>
+<div class="resposta">Resposta: f<sub>Y</sub>(y) = (1/&gamma;) e<sup>(y-&alpha;)/&gamma;</sup> e<sup>-e^((y-&alpha;)/&gamma;)</sup> (Gumbel).</div>
+
+<h3 class="keep">Questão 9 — Provar que a soma é Erlang(3)</h3>
+<div class="enunciado">Peças, mão de obra e pintura, exponenciais independentes média $3.000. Y = X<sub>1</sub>+X<sub>2</sub>+X<sub>3</sub>. Prove que Y ~ Erlang(3).</div>
+<div class="ferramenta"><b>Ferramenta:</b> soma de independentes = produto das FGMs. FGM de cada exponencial (média 3000) = 1/(1-3000t).</div>
+<div class="passo"><span class="num">1</span> Cada FGM = 1/(1-3000t).</div>
+<div class="passo"><span class="num">2</span> Multiplicar as três: [1/(1-3000t)]<sup>3</sup>.</div>
+<div class="passo"><span class="num">3</span> Essa é a FGM da Gama com forma 3 e escala 3000 = Erlang(3). (Bônus: E(Y)=3x3000=9.000.)</div>
+<div class="resposta">Resposta: Y ~ Gama(3, 3000) = Erlang(3) ; E(Y) = 9.000.</div>
+
+<h3 class="keep">Questão 10 — Erlang(2) e "pelo menos um"</h3>
+<div class="enunciado">Y = X<sub>1</sub>+X<sub>2</sub> (enfermaria + UTI), exponenciais independentes média $6.000. (a) Distribuição de Y. (b) Com 120 internações, P(pelo menos uma custar &gt; $40.000).</div>
+<div class="ferramenta"><b>Ferramenta:</b> soma de 2 exponenciais iguais = Erlang(2). Cauda da Erlang(2): P(Y&gt;y) = e<sup>-y/&beta;</sup>(1 + y/&beta;). "Pelo menos uma em 120" = 1 - (prob de nenhuma)<sup>120</sup>.</div>
+<div class="passo"><span class="num">1</span> <b>(a)</b> Y ~ Gama(2, 6000) = <b>Erlang(2)</b>.</div>
+<div class="passo"><span class="num">2</span> Calcular y/&beta; = 40000/6000 = 6,667.</div>
+<div class="passo"><span class="num">3</span> P(uma &gt; 40000) = e<sup>-6,667</sup> x (1 + 6,667) = 0,001272 x 7,667 = 0,00975.</div>
+<div class="passo"><span class="num">4</span> P(nenhuma passa) por internação = 1 - 0,00975 = 0,99025.</div>
+<div class="passo"><span class="num">5</span> <b>(b)</b> P(pelo menos uma em 120) = 1 - (0,99025)<sup>120</sup> = 1 - 0,3085 = 0,6915.</div>
+<div class="resposta">Resposta: (a) Erlang(2) ; (b) 0,6915 (cerca de 69%).</div>
+
+<h3 class="keep">Questão 11 — FGM com franquia (soma de constante)</h3>
+<div class="enunciado">Pagamento Y = X + c, com c = $200 fixo e X ~ exponencial média $1.000. Ache a FGM de Y.</div>
+<div class="ferramenta"><b>Ferramenta:</b> somar uma constante c multiplica a FGM por e<sup>ct</sup>. FGM da exponencial (média 1000) = 1/(1-1000t).</div>
+<div class="passo"><span class="num">1</span> FGM de X = 1/(1-1000t).</div>
+<div class="passo"><span class="num">2</span> Somar c=200: multiplicar por e<sup>200t</sup>.</div>
+<div class="passo"><span class="num">3</span> Resultado: e<sup>200t</sup> / (1-1000t).</div>
+<div class="resposta">Resposta: M<sub>Y</sub>(t) = e<sup>200t</sup> / (1 - 1000t).</div>
+
+<hr>
+<p style="text-align:center; color:#888; font-size:12px;">Resoluções passo a passo · Estatística Inferencial · Mirador</p>
+
+</div>
+</body>
+</html>
