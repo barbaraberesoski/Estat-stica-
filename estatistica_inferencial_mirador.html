@@ -120,7 +120,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <h3 class="keep">Lista 1 — Questão 1</h3>
 <div class="questao">Na empresa A, a média salarial é 10.000 e o 3o quartil é 5.000.</div>
 <p><strong>Quartil:</strong> o 3o quartil (Q3) deixa 75% dos dados abaixo dele. Aqui Q3 = 5.000 mas a média = 10.000: 75% ganham ate 5.000, mas poucos salários altíssimos puxam a média para cima. Distribuição <strong>assimétrica à direita</strong>.</p>
-<p><strong>(a)</strong> P(X &le; 5.000) = 0,75 e P(X &gt; 5.000) = 0,25. É muito mais provável <strong>ganhar MENOS que 5.000</strong> (75%).</p>
+<p><strong>(a)</strong> P(X &lt;= 5.000) = 0,75 e P(X &gt; 5.000) = 0,25. É muito mais provável <strong>ganhar MENOS que 5.000</strong> (75%).</p>
 <p><strong>(b)</strong> Empresa B: média 7.000, <strong>variância aprox. 0</strong> = quase todos ganham ~7.000. Empresa A: média 10.000 mas 75% ganham ate 5.000.</p>
 <div class="verde"><strong>Resposta:</strong> Escolher a <strong>Empresa B</strong>. Apesar da média menor, a variância nula garante ganhar ~7.000. Na A, um salário sorteado ao acaso provavelmente seria baixo. A média sozinha engana — é preciso olhar dispersão e assimetria.</div>
 
@@ -143,7 +143,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <h3>Tabela-resumo (cole no seu resumo!)</h3>
 <table>
   <tr><th>Distribuição</th><th>f(x) / P(X=x)</th><th>E(X)</th><th>Var(X)</th><th>Espaço param.</th></tr>
-  <tr><td>Binomial(n,&theta;)</td><td>C(n,x) &middot; &theta;<sup>x</sup> &middot; (1&minus;&theta;)<sup>n&minus;x</sup></td><td>n&theta;</td><td>n&theta;(1&minus;&theta;)</td><td>n inteiro, 0&le;&theta;&le;1</td></tr>
+  <tr><td>Binomial(n,&theta;)</td><td>C(n,x) &middot; &theta;<sup>x</sup> &middot; (1&minus;&theta;)<sup>n&minus;x</sup></td><td>n&theta;</td><td>n&theta;(1&minus;&theta;)</td><td>n inteiro, 0&lt;=&theta;&lt;=1</td></tr>
   <tr><td>Poisson(&theta;)</td><td>e<sup>&minus;&theta;</sup> &middot; &theta;<sup>x</sup> / x!</td><td>&theta;</td><td>&theta;</td><td>&theta;&gt;0</td></tr>
   <tr><td>Uniforme(a,b)</td><td>1/(b&minus;a)</td><td>(a+b)/2</td><td>(b&minus;a)<sup>2</sup>/12</td><td>a&lt;b</td></tr>
   <tr><td>Normal(&mu;,&sigma;<sup>2</sup>)</td><td>(1/sqrt(2&pi;&sigma;<sup>2</sup>)) &middot; e<sup>&minus;(x&minus;&mu;)<sup>2</sup>/2&sigma;<sup>2</sup></sup></td><td>&mu;</td><td>&sigma;<sup>2</sup></td><td>&mu; real, &sigma;<sup>2</sup>&gt;0</td></tr>
@@ -154,7 +154,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
   <strong>Destaques que caem muito:</strong><br>
   &bull; <strong>Poisson:</strong> média = variância = &theta;.<br>
   &bull; <strong>Normal — padronização:</strong> Z = (X &minus; &mu;)/&sigma;, depois consulta a tabela Z.<br>
-  &bull; <strong>Exponencial — cauda:</strong> P(X &gt; x) = e<sup>&minus;x/média</sup> &nbsp; e &nbsp; P(X &le; x) = 1 &minus; e<sup>&minus;x/média</sup>.
+  &bull; <strong>Exponencial — cauda:</strong> P(X &gt; x) = e<sup>&minus;x/média</sup> &nbsp; e &nbsp; P(X &lt;= x) = 1 &minus; e<sup>&minus;x/média</sup>.
 </div>
 
 <div class="alerta">
@@ -170,11 +170,11 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <!-- MODULO 4 -->
 <h2>Módulo 4 — Funções de Distribuição (FDA/CDF) e Densidades</h2>
 <h3>4.1 Dois objetos ligados</h3>
-<p><strong>Densidade f(x):</strong> probabilidade sai integrando: P(a &le; X &le; b) = int de a até b de f(x) dx.</p>
-<p><strong>Acumulada (CDF):</strong> F(x) = P(X &le; x) = int de menos infinito até x de f(t) dt.</p>
+<p><strong>Densidade f(x):</strong> probabilidade sai integrando: P(a &lt;= X &lt;= b) = int de a até b de f(x) dx.</p>
+<p><strong>Acumulada (CDF):</strong> F(x) = P(X &lt;= x) = int de menos infinito até x de f(t) dt.</p>
 <div class="formula center">f(x) = derivada de F(x) &nbsp; (a densidade é a derivada da acumulada)</div>
 <h3>4.2 As duas propriedades de toda densidade</h3>
-<div class="box-boxed">(1) f(x) &ge; 0 &nbsp;&nbsp;&nbsp; (2) int de f(x) dx = 1 &nbsp;(área total = 1)</div>
+<div class="box-boxed">(1) f(x) &gt;= 0 &nbsp;&nbsp;&nbsp; (2) int de f(x) dx = 1 &nbsp;(área total = 1)</div>
 <p>A propriedade (2) serve para <strong>achar constantes desconhecidas</strong>.</p>
 
 <h3 class="keep">Lista 3 — Questão 1</h3>
@@ -185,14 +185,14 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 
 <h3 class="keep">Lista 3 — Questão 4</h3>
 <div class="questao">f(x) = k &middot; e<sup>&minus;kx</sup> &middot; I(x&gt;0), com k&gt;0. Mostre que é fdp e calcule P(X&gt;2).</div>
-<p>É a <strong>Exponencial de taxa k</strong>. (1) f &ge; 0 OK. (2) int de 0 a infinito de k&middot;e<sup>&minus;kx</sup> dx = 1 OK. Logo é fdp.</p>
+<p>É a <strong>Exponencial de taxa k</strong>. (1) f &gt;= 0 OK. (2) int de 0 a infinito de k&middot;e<sup>&minus;kx</sup> dx = 1 OK. Logo é fdp.</p>
 <div class="box-boxed">P(X &gt; 2) = int de 2 a infinito de k&middot;e<sup>&minus;kx</sup> dx = e<sup>&minus;2k</sup></div>
 <p>Confirma a regra da cauda: P(X&gt;x) = e<sup>&minus;taxa&middot;x</sup>.</p>
 
 <h3>4.3 CDF do MÁXIMO e do MÍNIMO (fundamental!)</h3>
 <p>Para X<sub>1</sub>,...,X<sub>n</sub> iid com CDF F(x):</p>
 <div class="box-boxed">F<sub>máx</sub>(x) = [F(x)]<sup>n</sup> &nbsp;&nbsp;&nbsp;&nbsp; F<sub>mín</sub>(x) = 1 &minus; [1&minus;F(x)]<sup>n</sup></div>
-<p><strong>Máximo</strong>: "máx &le; x" quer dizer TODOS &le; x = produto = [F(x)]<sup>n</sup>.<br>
+<p><strong>Máximo</strong>: "máx &lt;= x" quer dizer TODOS &lt;= x = produto = [F(x)]<sup>n</sup>.<br>
 <strong>Mínimo</strong>: "mín &gt; x" quer dizer TODOS &gt; x = [1&minus;F(x)]<sup>n</sup>.</p>
 
 <h3 class="keep">Lista 1 — Questão 4</h3>
@@ -266,10 +266,10 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <div class="box-boxed">P(M &gt; 6000) = 1 &minus; (0,6988)<sup>20</sup> aprox. 0,9992</div>
 
 <h3 class="keep">Lista 1 — Questão 10 (soma de Poissons)</h3>
-<div class="questao">N_A~Poisson(1,8) e N_R~Poisson(0,7), independentes. N=N_A+N_R. Distribuição, E(N), Var(N), P(N&ge;4).</div>
+<div class="questao">N_A~Poisson(1,8) e N_R~Poisson(0,7), independentes. N=N_A+N_R. Distribuição, E(N), Var(N), P(N&gt;=4).</div>
 <p>M<sub>N</sub>(t) = e<sup>1,8(e<sup>t</sup>&minus;1)</sup> &middot; e<sup>0,7(e<sup>t</sup>&minus;1)</sup> = e<sup>2,5(e<sup>t</sup>&minus;1)</sup> = <strong>N ~ Poisson(2,5)</strong>. E(N)=Var(N)=2,5.</p>
-<p>P(N&le;3) = 0,0821+0,2052+0,2565+0,2138 = 0,7576.</p>
-<div class="box-boxed">P(N &ge; 4) = 1 &minus; 0,7576 aprox. 0,2424</div>
+<p>P(N&lt;=3) = 0,0821+0,2052+0,2565+0,2138 = 0,7576.</p>
+<div class="box-boxed">P(N &gt;= 4) = 1 &minus; 0,7576 aprox. 0,2424</div>
 
 <h3 class="keep">Lista 1 — Questão 8 (soma de Normais)</h3>
 <div class="questao">Z1~N(1000, 200<sup>2</sup>) e Z2~N(500, 100<sup>2</sup>), independentes. T=Z1+Z2. Distribuição, E(T), Var(T), P(T&gt;1700).</div>
@@ -289,12 +289,12 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 
 <!-- MODULO 7 -->
 <h2>Módulo 7 — Transformações de Variáveis (distribuição de Y = g(X))</h2>
-<div class="verde"><strong>Método da FDA (o mais seguro):</strong> 1. F<sub>Y</sub>(y)=P(g(X)&le;y). 2. Isole X. 3. Substitua F<sub>X</sub> conhecida. 4. Derive para obter f<sub>Y</sub>(y).</div>
+<div class="verde"><strong>Método da FDA (o mais seguro):</strong> 1. F<sub>Y</sub>(y)=P(g(X)&lt;=y). 2. Isole X. 3. Substitua F<sub>X</sub> conhecida. 4. Derive para obter f<sub>Y</sub>(y).</div>
 <p>Nas questões 6-8, X ~ exp(&theta;) na convenção taxa: F<sub>X</sub>(x)=1&minus;e<sup>&minus;&theta;x</sup>, f<sub>X</sub>(x)=&theta;e<sup>&minus;&theta;x</sup>.</p>
 
 <h3 class="keep">Lista 3 — Questão 6 (Weibull)</h3>
 <div class="questao">X~exp(&theta;), Y = X<sup>1/&gamma;</sup>. Determine a fdp de Y.</div>
-<p>F<sub>Y</sub>(y)=P(X<sup>1/&gamma;</sup>&le;y)=P(X&le;y<sup>&gamma;</sup>)=1&minus;e<sup>&minus;&theta;y<sup>&gamma;</sup></sup>. Derivando:</p>
+<p>F<sub>Y</sub>(y)=P(X<sup>1/&gamma;</sup>&lt;=y)=P(X&lt;=y<sup>&gamma;</sup>)=1&minus;e<sup>&minus;&theta;y<sup>&gamma;</sup></sup>. Derivando:</p>
 <div class="box-boxed">f<sub>Y</sub>(y) = &theta;&gamma; &middot; y<sup>&gamma;&minus;1</sup> &middot; e<sup>&minus;&theta;y<sup>&gamma;</sup></sup>, &nbsp;y&gt;0 &nbsp;(Weibull)</div>
 
 <h3 class="keep">Lista 3 — Questão 7 (Rayleigh)</h3>
@@ -304,7 +304,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 
 <h3 class="keep">Lista 3 — Questão 8 (Gumbel)</h3>
 <div class="questao">X~exp(1), Y = &alpha; + &gamma;&middot;ln(X). Determine a fdp de Y.</div>
-<p>ln X &le; (y&minus;&alpha;)/&gamma; = X &le; e<sup>(y&minus;&alpha;)/&gamma;</sup>. F<sub>Y</sub>(y)=1&minus;exp(&minus;e<sup>(y&minus;&alpha;)/&gamma;</sup>). Derivando:</p>
+<p>ln X &lt;= (y&minus;&alpha;)/&gamma; = X &lt;= e<sup>(y&minus;&alpha;)/&gamma;</sup>. F<sub>Y</sub>(y)=1&minus;exp(&minus;e<sup>(y&minus;&alpha;)/&gamma;</sup>). Derivando:</p>
 <div class="box-boxed">f<sub>Y</sub>(y) = (1/&gamma;) &middot; exp((y&minus;&alpha;)/&gamma;) &middot; exp(&minus;e<sup>(y&minus;&alpha;)/&gamma;</sup>) &nbsp;(Gumbel)</div>
 
 <h3 class="keep">Lista 3 — Questão 11 (translação Y = X + c)</h3>
@@ -317,7 +317,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <h2>Módulo 8 — Distribuições Amostrais e Teorema Central do Limite</h2>
 <p>Média amostral X&#772; = (X<sub>1</sub>+...+X<sub>n</sub>)/n. Fatos fundamentais:</p>
 <div class="box-boxed">E(X&#772;) = &mu; &nbsp;&nbsp;&nbsp; Var(X&#772;) = &sigma;<sup>2</sup>/n &nbsp;&nbsp;&nbsp; erro-padrão = &sigma;/sqrt(n)</div>
-<div class="destaque"><strong>TCL:</strong> para n grande (&ge;30), X&#772; é aprox. Normal(&mu;, &sigma;<sup>2</sup>/n) <strong>independente da distribuição original</strong>. Se os dados já são Normais, é exato para qualquer n.</div>
+<div class="destaque"><strong>TCL:</strong> para n grande (&gt;=30), X&#772; é aprox. Normal(&mu;, &sigma;<sup>2</sup>/n) <strong>independente da distribuição original</strong>. Se os dados já são Normais, é exato para qualquer n.</div>
 <p>Padronização: Z = (X&#772; &minus; &mu;)/(&sigma;/sqrt(n)). Para a exponencial, desvio-padrão = média.</p>
 
 <h3 class="keep">Lista 2 — Questão 1</h3>
@@ -329,7 +329,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 
 <h3 class="keep">Lista 2 — Questão 2</h3>
 <div class="questao">Sinistros exponenciais, média 8.000 (forte assimetria). Amostra n=64. P(média entre 7.000 e 9.500)?</div>
-<p>Exp: &sigma; = média = 8000. n=64 &ge; 30 = <strong>TCL justifica a Normal</strong>. Erro-padrão = 8000/8 = 1000. X&#772; ~ N(8000, 1000<sup>2</sup>).</p>
+<p>Exp: &sigma; = média = 8000. n=64 &gt;= 30 = <strong>TCL justifica a Normal</strong>. Erro-padrão = 8000/8 = 1000. X&#772; ~ N(8000, 1000<sup>2</sup>).</p>
 <p>Z1 = (7000&minus;8000)/1000 = &minus;1,0 ; Z2 = (9500&minus;8000)/1000 = 1,5.</p>
 <div class="box-boxed">P(&minus;1 &lt; Z &lt; 1,5) = 0,9332 &minus; 0,1587 = 0,7745</div>
 
@@ -347,7 +347,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <h3 class="keep">Lista 2 — Questão 4</h3>
 <div class="questao">Sinistros ~ U(0,100). Retenção 80. n=5. M=máx. (a) P(nenhum ultrapassa). (b) P(resseguro acionado ao menos uma vez).</div>
 <p>F(x)=x/100 = F(80)=0,8.</p>
-<p><strong>(a)</strong> P(M&le;80) = (0,8)<sup>5</sup> = <strong>0,3277</strong>. &nbsp; <strong>(b)</strong> P(M&gt;80) = 1 &minus; 0,3277 = <strong>0,6723</strong>.</p>
+<p><strong>(a)</strong> P(M&lt;=80) = (0,8)<sup>5</sup> = <strong>0,3277</strong>. &nbsp; <strong>(b)</strong> P(M&gt;80) = 1 &minus; 0,3277 = <strong>0,6723</strong>.</p>
 
 <h3 class="keep">Lista 2 — Questão 5 (mínimo de exponenciais)</h3>
 <div class="questao">4 carteiras, T~exp (tempo médio 50 meses). T_mín = mín(T1,...,T4). (a) Distribuição de T_mín. (b) P(nenhum evento nos primeiros 10 meses).</div>
@@ -356,7 +356,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <p><strong>(b)</strong> P(T_mín&gt;10) = e<sup>&minus;10/12,5</sup> = e<sup>&minus;0,8</sup> aprox. <strong>0,4493</strong>.</p>
 
 <h3 class="keep">Lista 2 — Questão 6 (máximo de Pareto)</h3>
-<div class="questao">X~Pareto, F(x)=1&minus;(10/x)<sup>3</sup>, x&ge;10. n=20. M=máx. P(maior &gt; 50 mil) vs P(um único &gt; 50 mil).</div>
+<div class="questao">X~Pareto, F(x)=1&minus;(10/x)<sup>3</sup>, x&gt;=10. n=20. M=máx. P(maior &gt; 50 mil) vs P(um único &gt; 50 mil).</div>
 <p>Cauda P(X&gt;x)=(10/x)<sup>3</sup>. Um único: P(X&gt;50)=(0,2)<sup>3</sup>=<strong>0,008</strong>.</p>
 <p>Máximo: P(M&gt;50) = 1 &minus; (0,992)<sup>20</sup> aprox. <strong>0,1484</strong>.</p>
 <div class="verde"><strong>Comparação:</strong> a chance de algum dos 20 passar de 50 mil (14,8%) é ~18x maior que a de um único (0,8%). É a base do risco de "cauda": eventos raros individualmente tornam-se prováveis no agregado.</div>
@@ -364,13 +364,13 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
 <!-- MODULO 10 -->
 <h2>Módulo 10 — Probabilidade Condicional</h2>
 <div class="box-boxed">P(A | B) = P(A e B) / P(B)</div>
-<p>Quando A é mais restritivo que B (ex.: T&ge;50 dentro de T&ge;20), então A e B = A, logo P(T&ge;50 | T&ge;20) = P(T&ge;50)/P(T&ge;20).</p>
+<p>Quando A é mais restritivo que B (ex.: T&gt;=50 dentro de T&gt;=20), então A e B = A, logo P(T&gt;=50 | T&gt;=20) = P(T&gt;=50)/P(T&gt;=20).</p>
 
 <h3 class="keep">Lista 3 — Questão 3</h3>
-<div class="questao">Tempo de vida T ~ U(0,70). Calcule P(T&ge;50 | T&ge;20).</div>
-<p>Para U(0,70): P(T&ge;a) = (70&minus;a)/70. Como 50&gt;20:</p>
-<div class="box-boxed">P(T&ge;50 | T&ge;20) = (20/70)/(50/70) = 20/50 = 0,40</div>
-<div class="destaque"><strong>Sacada:</strong> a uniforme NÃO é "sem memória". P(T&ge;50) incondicional aprox. 0,286, mas condicionada a já ter vivido 20 anos sobe para 0,40. (Só a exponencial é memoryless.)</div>
+<div class="questao">Tempo de vida T ~ U(0,70). Calcule P(T&gt;=50 | T&gt;=20).</div>
+<p>Para U(0,70): P(T&gt;=a) = (70&minus;a)/70. Como 50&gt;20:</p>
+<div class="box-boxed">P(T&gt;=50 | T&gt;=20) = (20/70)/(50/70) = 20/50 = 0,40</div>
+<div class="destaque"><strong>Sacada:</strong> a uniforme NÃO é "sem memória". P(T&gt;=50) incondicional aprox. 0,286, mas condicionada a já ter vivido 20 anos sobe para 0,40. (Só a exponencial é memoryless.)</div>
 
 <!-- RESUMO -->
 <h2>Resumo Final — Cola de Véspera</h2>
@@ -400,7 +400,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
   &bull; <strong>Prejuízo = valor negativo</strong> no valor esperado.<br>
   &bull; <strong>Somar constante NÃO muda a variância</strong>.<br>
   &bull; <strong>Somas de exponenciais só viram Erlang se as médias forem IGUAIS</strong>.<br>
-  &bull; <strong>TCL exige n &ge; 30</strong> — sempre escreva a justificativa.<br>
+  &bull; <strong>TCL exige n &gt;= 30</strong> — sempre escreva a justificativa.<br>
   &bull; <strong>"Pelo menos um"</strong> = use o complemento 1 &minus; [...]<sup>n</sup>.
 </div>
 
@@ -412,7 +412,7 @@ Da teoria do zero à resolução detalhada de todas as 27 questões</p>
   <tr><td>L1 Q3</td><td>Obra 1 (82.500)</td><td>L3 Q3</td><td>0,40</td></tr>
   <tr><td>L1 Q8</td><td>T~N(1500,50000); P aprox. 0,187</td><td>L3 Q4</td><td>P(X&gt;2)=e<sup>&minus;2k</sup></td></tr>
   <tr><td>L1 Q9</td><td>E=25.000, Var=425M; P(máx) aprox. 0,999</td><td>L3 Q9</td><td>Erlang(3); E=9.000</td></tr>
-  <tr><td>L1 Q10</td><td>Poisson(2,5); P(N&ge;4) aprox. 0,242</td><td>L3 Q10</td><td>Erlang(2); P aprox. 0,69</td></tr>
+  <tr><td>L1 Q10</td><td>Poisson(2,5); P(N&gt;=4) aprox. 0,242</td><td>L3 Q10</td><td>Erlang(2); P aprox. 0,69</td></tr>
   <tr><td>L2 Q1</td><td>N(12000,500<sup>2</sup>); P aprox. 0,023</td><td>L2 Q4</td><td>nenhum 0,328; ao menos 1: 0,672</td></tr>
   <tr><td>L2 Q2</td><td>aprox. 0,775 (TCL)</td><td>L2 Q5</td><td>Exp média 12,5; P aprox. 0,449</td></tr>
   <tr><td>L2 Q3</td><td>aprox. 0,905</td><td>L2 Q6</td><td>um 0,008; máx 0,148</td></tr>

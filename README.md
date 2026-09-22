@@ -27,3 +27,12 @@ Da teoria do zero à resolução detalhada das 27 questões.
 10. Probabilidade Condicional
 
 + Resumo final com fórmulas-chave, armadilhas e gabarito-relâmpago.
+
+
+## ATUALIZADO (correcao de simbolos)
+
+Baixe a versao mais recente e sem simbolos quebrados:
+
+**estatistica_inferencial_mirador_v2.pdf** (use este)
+
+Se abrir a versao antiga e ver quadrados, e cache do navegador: baixe o arquivo _v2.
