@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatística Inferencial — Guia Completo (Mirador)</title>
+<style>
+  :root{
+    --azul:#1a4b8c; --azul-claro:#2e6cb8; --cinza:#333; --cinza-claro:#f4f6fa;
+    --destaque:#fff8e1; --destaque-borda:#f0c040; --verde:#e8f5e9; --verde-borda:#66bb6a;
+    --alerta:#ffebee; --alerta-borda:#ef5350;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Noto Sans', Arial, sans-serif;
+    color:var(--cinza); line-height:1.6; margin:0; padding:0; font-size:14.5px;
+  }
+  .page{max-width:820px; margin:0 auto; padding:40px 48px;}
+  h1{color:var(--azul); font-size:30px; margin:0 0 4px; border-bottom:4px solid var(--azul); padding-bottom:10px;}
+  h2{color:var(--azul); font-size:22px; margin-top:36px; border-bottom:2px solid var(--azul-claro); padding-bottom:6px; page-break-after:avoid;}
+  h3{color:var(--azul-claro); font-size:17px; margin-top:24px; page-break-after:avoid;}
+  h4{color:#444; font-size:15px; margin:16px 0 6px;}
+  p{margin:8px 0;}
+  .subtitle{color:#666; font-size:15px; margin-bottom:24px;}
+  .formula{
+    background:var(--cinza-claro); border-left:4px solid var(--azul-claro);
+    padding:10px 16px; margin:12px 0; font-size:16px; overflow-x:auto; border-radius:4px;
+  }
+  .formula.center{text-align:center;}
+  .box-boxed{
+    background:#eef3fb; border:2px solid var(--azul-claro); border-radius:6px;
+    padding:8px 16px; margin:12px 0; text-align:center;
+    font-size:16px; font-weight:600; color:var(--azul);
+  }
+  .destaque{background:var(--destaque); border-left:4px solid var(--destaque-borda); padding:10px 16px; margin:12px 0; border-radius:4px;}
+  .alerta{background:var(--alerta); border-left:4px solid var(--alerta-borda); padding:10px 16px; margin:12px 0; border-radius:4px;}
+  .verde{background:var(--verde); border-left:4px solid var(--verde-borda); padding:10px 16px; margin:12px 0; border-radius:4px;}
+  .questao{background:#f0f0f0; border-left:4px solid #888; padding:8px 16px; margin:14px 0; font-style:italic; border-radius:4px;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:13.5px;}
+  th,td{border:1px solid #ccc; padding:7px 10px; text-align:left;}
+  th{background:var(--azul); color:#fff;}
+  tr:nth-child(even){background:#f7f9fc;}
+  sup{font-size:0.72em; vertical-align:super;}
+  sub{font-size:0.72em; vertical-align:sub;}
+  code{background:#eee; padding:1px 5px; border-radius:3px; font-family:Consolas,monospace; font-size:0.92em;}
+  hr{border:none; border-top:1px dashed #bbb; margin:28px 0;}
+  .toc{background:var(--cinza-claro); border-radius:6px; padding:16px 24px; margin:20px 0;}
+  .toc h3{margin-top:0;}
+  .toc ol{margin:0; padding-left:20px;}
+  .toc li{margin:4px 0;}
+  .keep{page-break-inside:avoid;}
+  @media print{ .page{padding:0 12px;} body{font-size:12.5px;} .no-print{display:none;} }
+  .print-btn{
+    position:fixed; top:16px; right:16px; background:var(--azul); color:#fff;
+    border:none; padding:12px 20px; border-radius:6px; font-size:15px; cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.2); z-index:1000;
+  }
+</style>
+</head>
+<body>
+<button class="print-btn no-print" onclick="window.print()">Salvar como PDF</button>
+<div class="page">
+
+<h1>Estatística Inferencial — Guia Completo de Estudo</h1>
+<p class="subtitle">Mirador · Revisão para a prova · Baseado nas 3 listas do Prof. Edimilson<br>
+Da teoria do zero à resolução detalhada de todas as 27 questões</p>
+
+<div class="toc keep">
+  <h3>Índice dos Módulos</h3>
+  <ol>
+    <li>Fundamentos: Esperança, Variância e propriedades</li>
+    <li>Valor Esperado como critério de decisão</li>
+    <li>As 5 distribuições fundamentais (f(x), E(X), Var(X))</li>
+    <li>Funções de Distribuição (FDA/CDF) e constantes normalizadoras</li>
+    <li>Função Geradora de Momentos (FGM) — o tema central</li>
+    <li>Soma de variáveis via FGM</li>
+    <li>Transformações de variáveis (Weibull, Rayleigh, Gumbel)</li>
+    <li>Distribuições Amostrais e Teorema Central do Limite</li>
+    <li>Estatísticas de Ordem: Máximo e Mínimo (resseguro)</li>
+    <li>Probabilidade Condicional</li>
+  </ol>
+  <p style="margin-bottom:0;"><strong>+ Resumo Final</strong> com fórmulas-chave, armadilhas e gabarito-relâmpago.</p>
+</div>
+
+<!-- MODULO 1 -->
+<h2>Módulo 1 — Fundamentos: Esperança, Variância e Propriedades</h2>
+
+<h3>1.1 Esperança (média)</h3>
+<p>Uma <strong>variável aleatória</strong> X é um número que depende do acaso. A <strong>esperança</strong> E(X) é o "centro de gravidade" da distribuição — o valor médio esperado.</p>
+<div class="formula center">Discreto: E(X) = soma de [ x &middot; P(X = x) ]</div>
+<div class="formula center">Contínuo: E(X) = int de [ x &middot; f(x) ] dx</div>
+
+<h3>1.2 Variância</h3>
+<p>Mede o <strong>espalhamento</strong> em torno da média. Fórmula mais usada:</p>
+<div class="box-boxed">Var(X) = E(X<sup>2</sup>) &minus; [E(X)]<sup>2</sup></div>
+<p>Desvio-padrão: &sigma; = sqrt( Var(X) ) — na mesma unidade dos dados.</p>
+
+<h3>1.3 Propriedades (DECORE!)</h3>
+<p>Sejam <em>a</em> e <em>b</em> constantes:</p>
+<table>
+  <tr><th>Esperança</th><th>Variância</th></tr>
+  <tr><td>E(a) = a</td><td>Var(a) = 0</td></tr>
+  <tr><td>E(aX) = a &middot; E(X)</td><td>Var(aX) = a<sup>2</sup> &middot; Var(X)</td></tr>
+  <tr><td>E(X + b) = E(X) + b</td><td>Var(X + b) = Var(X)</td></tr>
+  <tr><td><strong>E(aX + b) = a &middot; E(X) + b</strong></td><td><strong>Var(aX + b) = a<sup>2</sup> &middot; Var(X)</strong></td></tr>
+  <tr><td>E(X+Y) = E(X)+E(Y) (sempre)</td><td>Var(X+Y) = Var(X)+Var(Y) (se independentes)</td></tr>
+</table>
+<div class="destaque">
+  <strong>Duas ideias que sempre caem:</strong><br>
+  1. <strong>Somar constante</strong> desloca a média mas <strong>NÃO muda a variância</strong>.<br>
+  2. <strong>Multiplicar por constante</strong> multiplica a média por <em>a</em> e a variância por <em>a<sup>2</sup></em> (o quadrado!).
+</div>
+
+<h3 class="keep">Lista 1 — Questão 2</h3>
+<div class="questao">O que acontece com a média e a variância quando: (i) multiplica cada observação por 2? (ii) soma 10 a cada observação?</div>
+<p><strong>(i) Y = 2X</strong> (a=2): média E(2X) = 2&middot;E(X) <strong>DOBRA</strong>; variância Var(2X) = 2<sup>2</sup>&middot;Var(X) = <strong>4&middot;Var(X)</strong>.</p>
+<p><strong>(ii) Y = X + 10</strong> (b=10): média E(X+10) = E(X)+10 <strong>aumenta em 10</strong>; variância Var(X+10) = <strong>Var(X)</strong> (não muda).</p>
+<div class="destaque"><strong>Intuição:</strong> somar 10 move a régua inteira — o formato da nuvem continua igual. Multiplicar por 2 "estica" a nuvem, aumentando o espalhamento.</div>
+
+<h3 class="keep">Lista 1 — Questão 1</h3>
+<div class="questao">Na empresa A, a média salarial é 10.000 e o 3o quartil é 5.000.</div>
+<p><strong>Quartil:</strong> o 3o quartil (Q3) deixa 75% dos dados abaixo dele. Aqui Q3 = 5.000 mas a média = 10.000: 75% ganham ate 5.000, mas poucos salários altíssimos puxam a média para cima. Distribuição <strong>assimétrica à direita</strong>.</p>
+<p><strong>(a)</strong> P(X &le; 5.000) = 0,75 e P(X &gt; 5.000) = 0,25. É muito mais provável <strong>ganhar MENOS que 5.000</strong> (75%).</p>
+<p><strong>(b)</strong> Empresa B: média 7.000, <strong>variância aprox. 0</strong> = quase todos ganham ~7.000. Empresa A: média 10.000 mas 75% ganham ate 5.000.</p>
+<div class="verde"><strong>Resposta:</strong> Escolher a <strong>Empresa B</strong>. Apesar da média menor, a variância nula garante ganhar ~7.000. Na A, um salário sorteado ao acaso provavelmente seria baixo. A média sozinha engana — é preciso olhar dispersão e assimetria.</div>
+
+<!-- MODULO 2 -->
+<h2>Módulo 2 — Valor Esperado como Critério de Decisão</h2>
+<p>Sob incerteza, calcule a média ponderada dos resultados pelas probabilidades e <strong>escolha a opção com maior lucro esperado</strong>.</p>
+<div class="formula center">E(Lucro) = soma de [ (resultado<sub>i</sub>) &times; P(resultado<sub>i</sub>) ]</div>
+<div class="alerta"><strong>Prejuízo é valor NEGATIVO.</strong> Prejuízo de 30.000 entra como &minus;30.000.</div>
+
+<h3 class="keep">Lista 1 — Questão 3</h3>
+<div class="questao">Obra 1: lucro 120.000 (prob 3/4) ou prejuízo 30.000 (prob 1/4). Obra 2: lucro 180.000 (prob 1/2) ou prejuízo 45.000 (prob 1/2). Qual escolher?</div>
+<p><strong>Obra 1:</strong> E(L1) = 120.000&middot;(3/4) + (&minus;30.000)&middot;(1/4) = 90.000 &minus; 7.500 = <strong>82.500</strong></p>
+<p><strong>Obra 2:</strong> E(L2) = 180.000&middot;(1/2) + (&minus;45.000)&middot;(1/2) = 90.000 &minus; 22.500 = <strong>67.500</strong></p>
+<div class="verde"><strong>Resposta:</strong> Escolher a <strong>Obra 1</strong> (82.500 &gt; 67.500). A Obra 2 ainda é mais arriscada (maior variância).</div>
+
+<!-- MODULO 3 -->
+<h2>Módulo 3 — As 5 Distribuições Fundamentais (o CORAÇÃO)</h2>
+<p><strong>Discreta</strong> = conta coisas (usa P(X=x)). <strong>Contínua</strong> = mede coisas (usa densidade f(x); probabilidades via integral).</p>
+
+<h3>Tabela-resumo (cole no seu resumo!)</h3>
+<table>
+  <tr><th>Distribuição</th><th>f(x) / P(X=x)</th><th>E(X)</th><th>Var(X)</th><th>Espaço param.</th></tr>
+  <tr><td>Binomial(n,&theta;)</td><td>C(n,x) &middot; &theta;<sup>x</sup> &middot; (1&minus;&theta;)<sup>n&minus;x</sup></td><td>n&theta;</td><td>n&theta;(1&minus;&theta;)</td><td>n inteiro, 0&le;&theta;&le;1</td></tr>
+  <tr><td>Poisson(&theta;)</td><td>e<sup>&minus;&theta;</sup> &middot; &theta;<sup>x</sup> / x!</td><td>&theta;</td><td>&theta;</td><td>&theta;&gt;0</td></tr>
+  <tr><td>Uniforme(a,b)</td><td>1/(b&minus;a)</td><td>(a+b)/2</td><td>(b&minus;a)<sup>2</sup>/12</td><td>a&lt;b</td></tr>
+  <tr><td>Normal(&mu;,&sigma;<sup>2</sup>)</td><td>(1/sqrt(2&pi;&sigma;<sup>2</sup>)) &middot; e<sup>&minus;(x&minus;&mu;)<sup>2</sup>/2&sigma;<sup>2</sup></sup></td><td>&mu;</td><td>&sigma;<sup>2</sup></td><td>&mu; real, &sigma;<sup>2</sup>&gt;0</td></tr>
+  <tr><td>Exponencial (média &beta;)</td><td>(1/&beta;) &middot; e<sup>&minus;x/&beta;</sup></td><td>&beta;</td><td>&beta;<sup>2</sup></td><td>&beta;&gt;0</td></tr>
+</table>
+
+<div class="destaque">
+  <strong>Destaques que caem muito:</strong><br>
+  &bull; <strong>Poisson:</strong> média = variância = &theta;.<br>
+  &bull; <strong>Normal — padronização:</strong> Z = (X &minus; &mu;)/&sigma;, depois consulta a tabela Z.<br>
+  &bull; <strong>Exponencial — cauda:</strong> P(X &gt; x) = e<sup>&minus;x/média</sup> &nbsp; e &nbsp; P(X &le; x) = 1 &minus; e<sup>&minus;x/média</sup>.
+</div>
+
+<div class="alerta">
+  <strong>Exponencial tem DUAS convenções:</strong><br>
+  &bull; <strong>&beta; = média (escala):</strong> f(x) = (1/&beta;)e<sup>&minus;x/&beta;</sup>, E=&beta;, Var=&beta;<sup>2</sup>.<br>
+  &bull; <strong>&beta; = taxa:</strong> f(x) = &beta;&middot;e<sup>&minus;&beta;x</sup>, E=1/&beta;, Var=1/&beta;<sup>2</sup>.<br>
+  <strong>Regra de ouro:</strong> a média da exponencial é o valor "típico" citado no problema. Deixe claro qual convenção adotou!
+</div>
+
+<h3>Lista 1 — Questão 6</h3>
+<p>A resposta é a própria tabela acima: (a) Binomial, (b) Poisson, (c) Uniforme(&theta;) = U(0,&theta;) com E=&theta;/2 e Var=&theta;<sup>2</sup>/12, (d) Normal, (e) Exponencial — cada uma com f(x), E(X), Var(X) e espaço paramétrico.</p>
+
+<!-- MODULO 4 -->
+<h2>Módulo 4 — Funções de Distribuição (FDA/CDF) e Densidades</h2>
+<h3>4.1 Dois objetos ligados</h3>
+<p><strong>Densidade f(x):</strong> probabilidade sai integrando: P(a &le; X &le; b) = int de a até b de f(x) dx.</p>
+<p><strong>Acumulada (CDF):</strong> F(x) = P(X &le; x) = int de menos infinito até x de f(t) dt.</p>
+<div class="formula center">f(x) = derivada de F(x) &nbsp; (a densidade é a derivada da acumulada)</div>
+<h3>4.2 As duas propriedades de toda densidade</h3>
+<div class="box-boxed">(1) f(x) &ge; 0 &nbsp;&nbsp;&nbsp; (2) int de f(x) dx = 1 &nbsp;(área total = 1)</div>
+<p>A propriedade (2) serve para <strong>achar constantes desconhecidas</strong>.</p>
+
+<h3 class="keep">Lista 3 — Questão 1</h3>
+<div class="questao">f(x) = &beta;x(4&minus;x) para 0 &lt; x &lt; 4, com &beta; &gt; 0. Determine &beta;.</div>
+<p>Impor int de 0 a 4 de &beta;x(4&minus;x) dx = 1. Expandindo x(4&minus;x) = 4x &minus; x<sup>2</sup>:</p>
+<div class="formula center">&beta; &middot; [2x<sup>2</sup> &minus; x<sup>3</sup>/3] de 0 a 4 = &beta; &middot; (32 &minus; 64/3) = &beta; &middot; (32/3) = 1</div>
+<div class="box-boxed">&beta; = 3/32</div>
+
+<h3 class="keep">Lista 3 — Questão 4</h3>
+<div class="questao">f(x) = k &middot; e<sup>&minus;kx</sup> &middot; I(x&gt;0), com k&gt;0. Mostre que é fdp e calcule P(X&gt;2).</div>
+<p>É a <strong>Exponencial de taxa k</strong>. (1) f &ge; 0 OK. (2) int de 0 a infinito de k&middot;e<sup>&minus;kx</sup> dx = 1 OK. Logo é fdp.</p>
+<div class="box-boxed">P(X &gt; 2) = int de 2 a infinito de k&middot;e<sup>&minus;kx</sup> dx = e<sup>&minus;2k</sup></div>
+<p>Confirma a regra da cauda: P(X&gt;x) = e<sup>&minus;taxa&middot;x</sup>.</p>
+
+<h3>4.3 CDF do MÁXIMO e do MÍNIMO (fundamental!)</h3>
+<p>Para X<sub>1</sub>,...,X<sub>n</sub> iid com CDF F(x):</p>
+<div class="box-boxed">F<sub>máx</sub>(x) = [F(x)]<sup>n</sup> &nbsp;&nbsp;&nbsp;&nbsp; F<sub>mín</sub>(x) = 1 &minus; [1&minus;F(x)]<sup>n</sup></div>
+<p><strong>Máximo</strong>: "máx &le; x" quer dizer TODOS &le; x = produto = [F(x)]<sup>n</sup>.<br>
+<strong>Mínimo</strong>: "mín &gt; x" quer dizer TODOS &gt; x = [1&minus;F(x)]<sup>n</sup>.</p>
+
+<h3 class="keep">Lista 1 — Questão 4</h3>
+<div class="questao">Amostra X<sub>1</sub>,...,X<sub>n</sub>, X<sub>i</sub> ~ F. Ache CDF e densidade de X<sub>(n)</sub> (máx) e X<sub>(1)</sub> (mín).</div>
+<table>
+  <tr><th></th><th>CDF</th><th>Densidade (derivando)</th></tr>
+  <tr><td>Máximo X<sub>(n)</sub></td><td>[F(x)]<sup>n</sup></td><td>n &middot; [F(x)]<sup>n&minus;1</sup> &middot; f(x)</td></tr>
+  <tr><td>Mínimo X<sub>(1)</sub></td><td>1 &minus; [1&minus;F(x)]<sup>n</sup></td><td>n &middot; [1&minus;F(x)]<sup>n&minus;1</sup> &middot; f(x)</td></tr>
+</table>
+
+<!-- MODULO 5 -->
+<h2>Módulo 5 — Função Geradora de Momentos (FGM): o tema MAIS importante</h2>
+<div class="box-boxed">M<sub>X</sub>(t) = E( e<sup>tX</sup> )</div>
+<p><strong>Discreta:</strong> soma de e<sup>tx</sup>&middot;P(X=x). &nbsp; <strong>Contínua:</strong> int de e<sup>tx</sup>&middot;f(x) dx.</p>
+
+<h3>Os 4 superpoderes da FGM</h3>
+<ol>
+  <li><strong>Gera momentos:</strong> E(X) = M'(0), E(X<sup>2</sup>) = M''(0), então Var(X) = M''(0) &minus; [M'(0)]<sup>2</sup>.</li>
+  <li><strong>Unicidade:</strong> cada distribuição tem FGM única = identifica a distribuição.</li>
+  <li><strong>Soma de independentes = PRODUTO das FGMs:</strong> M<sub>soma</sub>(t) = produto de M<sub>Xi</sub>(t).</li>
+  <li><strong>Transformação linear:</strong> M<sub>aX+b</sub>(t) = e<sup>bt</sup> &middot; M<sub>X</sub>(at).</li>
+</ol>
+<p>Sempre M(0) = 1 (serve de checagem).</p>
+
+<h3>Tabela de FGMs (decore as principais)</h3>
+<table>
+  <tr><th>Distribuição</th><th>FGM M(t)</th></tr>
+  <tr><td>Poisson(&theta;)</td><td>e<sup>&theta;(e<sup>t</sup> &minus; 1)</sup></td></tr>
+  <tr><td>Normal(&mu;,&sigma;<sup>2</sup>)</td><td>e<sup>&mu;t + (1/2)&sigma;<sup>2</sup>t<sup>2</sup></sup></td></tr>
+  <tr><td>Exponencial (taxa &lambda;)</td><td>&lambda;/(&lambda; &minus; t), &nbsp;t&lt;&lambda;</td></tr>
+  <tr><td>Exponencial (média &beta;)</td><td>1/(1 &minus; &beta;t), &nbsp;t&lt;1/&beta;</td></tr>
+  <tr><td>Gama(&alpha;, &lambda;) — taxa &lambda;</td><td>[&lambda;/(&lambda; &minus; t)]<sup>&alpha;</sup></td></tr>
+  <tr><td>Binomial(n,&theta;)</td><td>(1 &minus; &theta; + &theta;e<sup>t</sup>)<sup>n</sup></td></tr>
+</table>
+<div class="destaque"><strong>Padrão Exp -&gt; Gama:</strong> a FGM da Gama é a da Exponencial elevada a &alpha;. É a chave da soma de exponenciais (Erlang).</div>
+
+<h3>Lista 1 — Questão 5 (teórica) — resposta modelo</h3>
+<p>A FGM de X é M<sub>X</sub>(t) = E(e<sup>tX</sup>), definida numa vizinhança de t=0. Propriedades: (1) a k-ésima derivada em 0 dá E(X<sup>k</sup>); (2) unicidade; (3) soma de independentes é produto das FGMs; (4) M<sub>aX+b</sub>(t) = e<sup>bt</sup>M<sub>X</sub>(at); (5) M(0)=1.</p>
+
+<h3 class="keep">Lista 3 — Questão 2</h3>
+<div class="questao">X ~ Exp(4). Determine rigorosamente a FGM e calcule Var(X).</div>
+<p>Taxa &lambda;=4, f(x)=4e<sup>&minus;4x</sup>. Pela definição:</p>
+<div class="formula center">M(t) = int de 0 a inf de e<sup>tx</sup>&middot;4e<sup>&minus;4x</sup> dx = 4 &middot; int de e<sup>&minus;(4&minus;t)x</sup> dx = 4/(4&minus;t), &nbsp;t&lt;4</div>
+<p>Checagem: M(0)=4/4=1 OK. Derivando: M'(t)=4(4&minus;t)<sup>&minus;2</sup>, M'(0)=4/16=1/4 = E(X). M''(t)=8(4&minus;t)<sup>&minus;3</sup>, M''(0)=8/64=1/8 = E(X<sup>2</sup>).</p>
+<div class="box-boxed">Var(X) = 1/8 &minus; (1/4)<sup>2</sup> = 1/8 &minus; 1/16 = 1/16</div>
+<p>Confere: Exp taxa 4 tem E=1/4, Var=1/16.</p>
+
+<!-- MODULO 6 -->
+<h2>Módulo 6 — Soma de Variáveis Independentes via FGM</h2>
+<div class="verde">
+  <strong>A RECEITA universal:</strong> 1. FGM de cada parcela -&gt; 2. Multiplique todas -&gt; 3. Simplifique -&gt; 4. Compare com a tabela (unicidade) -&gt; identifica a distribuição de S.
+</div>
+<h3>Os "teoremas de soma"</h3>
+<table>
+  <tr><th>Somando independentes...</th><th>Resultado</th></tr>
+  <tr><td>n Exponenciais iguais (mesma taxa)</td><td>Gama(&alpha;=n, &beta;) = Erlang(n)</td></tr>
+  <tr><td>Poissons &theta;<sub>1</sub>, &theta;<sub>2</sub>, ...</td><td>Poisson(&theta;<sub>1</sub>+&theta;<sub>2</sub>+...)</td></tr>
+  <tr><td>Normais N(&mu;<sub>i</sub>, &sigma;<sub>i</sub><sup>2</sup>)</td><td>Normal(soma &mu;<sub>i</sub>, soma &sigma;<sub>i</sub><sup>2</sup>)</td></tr>
+</table>
+
+<h3 class="keep">Lista 3 — Questão 9 (Erlang)</h3>
+<div class="questao">Peças, mão de obra e pintura, exponenciais independentes média 3.000. Y = X1+X2+X3. Prove que Y é Erlang(3).</div>
+<p>Cada FGM = 1/(1&minus;3000t). Multiplicando as três: M<sub>Y</sub>(t) = [1/(1&minus;3000t)]<sup>3</sup> = forma da Gama com &alpha;=3, &beta;=3000.</p>
+<div class="box-boxed">Y ~ Gama(3, 3000) = Erlang(3) &nbsp;·&nbsp; E(Y)=9.000, Var(Y)=27.000.000</div>
+
+<h3 class="keep">Lista 1 — Questão 9</h3>
+<div class="questao">Y1~exp (média 5.000) e Y2~exp (média 20.000), independentes. S=Y1+Y2. Distribuição, E(S), Var(S). Depois, máx de 20 sinistros de colisão leve &gt; 6.000.</div>
+<div class="alerta"><strong>Médias DIFERENTES</strong> = a soma NÃO é Erlang. M<sub>S</sub>(t) = 1/(1&minus;5000t) &middot; 1/(1&minus;20000t) (convolução de duas exponenciais distintas).</div>
+<p>E(S) = 5.000 + 20.000 = <strong>25.000</strong>. Var(S) = 5.000<sup>2</sup> + 20.000<sup>2</sup> = <strong>425.000.000</strong>.</p>
+<p><strong>Máx de 20 (exp média 5000) &gt; 6000:</strong> F(6000)=1&minus;e<sup>&minus;1,2</sup> aprox. 0,6988.</p>
+<div class="box-boxed">P(M &gt; 6000) = 1 &minus; (0,6988)<sup>20</sup> aprox. 0,9992</div>
+
+<h3 class="keep">Lista 1 — Questão 10 (soma de Poissons)</h3>
+<div class="questao">N_A~Poisson(1,8) e N_R~Poisson(0,7), independentes. N=N_A+N_R. Distribuição, E(N), Var(N), P(N&ge;4).</div>
+<p>M<sub>N</sub>(t) = e<sup>1,8(e<sup>t</sup>&minus;1)</sup> &middot; e<sup>0,7(e<sup>t</sup>&minus;1)</sup> = e<sup>2,5(e<sup>t</sup>&minus;1)</sup> = <strong>N ~ Poisson(2,5)</strong>. E(N)=Var(N)=2,5.</p>
+<p>P(N&le;3) = 0,0821+0,2052+0,2565+0,2138 = 0,7576.</p>
+<div class="box-boxed">P(N &ge; 4) = 1 &minus; 0,7576 aprox. 0,2424</div>
+
+<h3 class="keep">Lista 1 — Questão 8 (soma de Normais)</h3>
+<div class="questao">Z1~N(1000, 200<sup>2</sup>) e Z2~N(500, 100<sup>2</sup>), independentes. T=Z1+Z2. Distribuição, E(T), Var(T), P(T&gt;1700).</div>
+<p>M<sub>T</sub>(t) = e<sup>1500t + (1/2)(40000+10000)t<sup>2</sup></sup> = <strong>T ~ N(1500, 50000)</strong>. &sigma; = sqrt(50000) aprox. 223,6.</p>
+<p>Padronizar: Z = (1700 &minus; 1500)/223,6 aprox. 0,89.</p>
+<div class="box-boxed">P(T &gt; 1700) = P(Z &gt; 0,89) = 1 &minus; 0,8133 aprox. 0,1867</div>
+
+<h3 class="keep">Lista 3 — Questão 5</h3>
+<div class="questao">X1, X2, X3 exponenciais independentes de mesma média. T = X1+X2+X3.</div>
+<p>Igual à Q9: três exponenciais iguais = M(t)=[1/(1&minus;&beta;t)]<sup>3</sup> = <strong>T ~ Gama(3, &beta;) = Erlang(3)</strong>.</p>
+
+<h3 class="keep">Lista 3 — Questão 10</h3>
+<div class="questao">Y = X1+X2 (enfermaria + UTI), exponenciais independentes média 6.000. (a) Distribuição de Y. (b) Com 120 internações, P(pelo menos um custo &gt; 40.000).</div>
+<p><strong>(a)</strong> Duas exp iguais = <strong>Y ~ Gama(2, 6000) = Erlang(2)</strong>. Cauda: P(Y&gt;y) = e<sup>&minus;y/&beta;</sup> &middot; (1 + y/&beta;).</p>
+<p><strong>(b)</strong> Uma: y/&beta; = 40000/6000 = 6,667. P(Y&gt;40000) = e<sup>&minus;6,667</sup>&middot;(1+6,667) aprox. 0,00975.</p>
+<div class="box-boxed">P(pelo menos um em 120) = 1 &minus; (0,99025)<sup>120</sup> aprox. 0,6915</div>
+
+<!-- MODULO 7 -->
+<h2>Módulo 7 — Transformações de Variáveis (distribuição de Y = g(X))</h2>
+<div class="verde"><strong>Método da FDA (o mais seguro):</strong> 1. F<sub>Y</sub>(y)=P(g(X)&le;y). 2. Isole X. 3. Substitua F<sub>X</sub> conhecida. 4. Derive para obter f<sub>Y</sub>(y).</div>
+<p>Nas questões 6-8, X ~ exp(&theta;) na convenção taxa: F<sub>X</sub>(x)=1&minus;e<sup>&minus;&theta;x</sup>, f<sub>X</sub>(x)=&theta;e<sup>&minus;&theta;x</sup>.</p>
+
+<h3 class="keep">Lista 3 — Questão 6 (Weibull)</h3>
+<div class="questao">X~exp(&theta;), Y = X<sup>1/&gamma;</sup>. Determine a fdp de Y.</div>
+<p>F<sub>Y</sub>(y)=P(X<sup>1/&gamma;</sup>&le;y)=P(X&le;y<sup>&gamma;</sup>)=1&minus;e<sup>&minus;&theta;y<sup>&gamma;</sup></sup>. Derivando:</p>
+<div class="box-boxed">f<sub>Y</sub>(y) = &theta;&gamma; &middot; y<sup>&gamma;&minus;1</sup> &middot; e<sup>&minus;&theta;y<sup>&gamma;</sup></sup>, &nbsp;y&gt;0 &nbsp;(Weibull)</div>
+
+<h3 class="keep">Lista 3 — Questão 7 (Rayleigh)</h3>
+<div class="questao">X~exp(&theta;), Y = (2X/&theta;)<sup>1/2</sup>. Determine a fdp de Y.</div>
+<p>Y<sup>2</sup>=2X/&theta; = X=&theta;y<sup>2</sup>/2. F<sub>Y</sub>(y)=1&minus;e<sup>&minus;&theta;<sup>2</sup>y<sup>2</sup>/2</sup>. Derivando:</p>
+<div class="box-boxed">f<sub>Y</sub>(y) = &theta;<sup>2</sup> &middot; y &middot; e<sup>&minus;&theta;<sup>2</sup>y<sup>2</sup>/2</sup>, &nbsp;y&gt;0 &nbsp;(Rayleigh)</div>
+
+<h3 class="keep">Lista 3 — Questão 8 (Gumbel)</h3>
+<div class="questao">X~exp(1), Y = &alpha; + &gamma;&middot;ln(X). Determine a fdp de Y.</div>
+<p>ln X &le; (y&minus;&alpha;)/&gamma; = X &le; e<sup>(y&minus;&alpha;)/&gamma;</sup>. F<sub>Y</sub>(y)=1&minus;exp(&minus;e<sup>(y&minus;&alpha;)/&gamma;</sup>). Derivando:</p>
+<div class="box-boxed">f<sub>Y</sub>(y) = (1/&gamma;) &middot; exp((y&minus;&alpha;)/&gamma;) &middot; exp(&minus;e<sup>(y&minus;&alpha;)/&gamma;</sup>) &nbsp;(Gumbel)</div>
+
+<h3 class="keep">Lista 3 — Questão 11 (translação Y = X + c)</h3>
+<div class="questao">Franquia fixa c=200, Y = X + c, X~exponencial média 1.000. Determine a FGM de Y.</div>
+<p>M<sub>X</sub>(t)=1/(1&minus;1000t). Somar c multiplica a FGM por e<sup>ct</sup>:</p>
+<div class="box-boxed">M<sub>Y</sub>(t) = e<sup>200t</sup>/(1&minus;1000t), &nbsp;t&lt;1/1000</div>
+<p>Checagem: E(Y) = E(X)+c = 1000+200 = 1200.</p>
+
+<!-- MODULO 8 -->
+<h2>Módulo 8 — Distribuições Amostrais e Teorema Central do Limite</h2>
+<p>Média amostral X&#772; = (X<sub>1</sub>+...+X<sub>n</sub>)/n. Fatos fundamentais:</p>
+<div class="box-boxed">E(X&#772;) = &mu; &nbsp;&nbsp;&nbsp; Var(X&#772;) = &sigma;<sup>2</sup>/n &nbsp;&nbsp;&nbsp; erro-padrão = &sigma;/sqrt(n)</div>
+<div class="destaque"><strong>TCL:</strong> para n grande (&ge;30), X&#772; é aprox. Normal(&mu;, &sigma;<sup>2</sup>/n) <strong>independente da distribuição original</strong>. Se os dados já são Normais, é exato para qualquer n.</div>
+<p>Padronização: Z = (X&#772; &minus; &mu;)/(&sigma;/sqrt(n)). Para a exponencial, desvio-padrão = média.</p>
+
+<h3 class="keep">Lista 2 — Questão 1</h3>
+<div class="questao">Sinistros ~ Normal(&mu;=12.000, &sigma;=3.000). Amostra n=36. (a) Distribuição de X&#772;. (b) P(X&#772;&gt;13.000). (c) Interprete.</div>
+<p><strong>(a)</strong> Dados Normais = X&#772; exata: Var(X&#772;)=3000<sup>2</sup>/36=250.000, erro-padrão=500. <strong>X&#772; ~ N(12.000, 500<sup>2</sup>)</strong>.</p>
+<p><strong>(b)</strong> Z = (13000&minus;12000)/500 = 2,0.</p>
+<div class="box-boxed">P(X&#772; &gt; 13000) = P(Z &gt; 2) = 1 &minus; 0,9772 = 0,0228</div>
+<p><strong>(c)</strong> ~2,3% de chance da média de 36 sinistros passar de 13.000. Observar isso na prática seria um alerta de deterioração da carteira.</p>
+
+<h3 class="keep">Lista 2 — Questão 2</h3>
+<div class="questao">Sinistros exponenciais, média 8.000 (forte assimetria). Amostra n=64. P(média entre 7.000 e 9.500)?</div>
+<p>Exp: &sigma; = média = 8000. n=64 &ge; 30 = <strong>TCL justifica a Normal</strong>. Erro-padrão = 8000/8 = 1000. X&#772; ~ N(8000, 1000<sup>2</sup>).</p>
+<p>Z1 = (7000&minus;8000)/1000 = &minus;1,0 ; Z2 = (9500&minus;8000)/1000 = 1,5.</p>
+<div class="box-boxed">P(&minus;1 &lt; Z &lt; 1,5) = 0,9332 &minus; 0,1587 = 0,7745</div>
+
+<h3 class="keep">Lista 2 — Questão 3</h3>
+<div class="questao">Prêmio médio &mu;=2.500, &sigma;=1.200. Amostra n=100. P(|X&#772; &minus; &mu;| &lt; 200)?</div>
+<p>Erro-padrão = 1200/10 = 120. |X&#772;&minus;&mu;|&lt;200 quer dizer |Z| &lt; 200/120 = 1,67.</p>
+<div class="box-boxed">P(|Z| &lt; 1,67) = 2&middot;&Phi;(1,67) &minus; 1 = 2(0,9525) &minus; 1 = 0,9050</div>
+<p>(Sem reposição: o fator de correção de população finita aprox. 1 quando a população é grande — por isso "aproximadamente".)</p>
+
+<!-- MODULO 9 -->
+<h2>Módulo 9 — Estatísticas de Ordem: Máximo e Mínimo (resseguro)</h2>
+<div class="box-boxed">P(máx &gt; x) = 1 &minus; [F(x)]<sup>n</sup> &nbsp;&nbsp;·&nbsp;&nbsp; P(mín &gt; x) = [1 &minus; F(x)]<sup>n</sup></div>
+<p><strong>Resseguro acionado</strong> quer dizer que algum sinistro ultrapassa a retenção = o <strong>máximo</strong> ultrapassa a retenção. "Nenhum ultrapassa" = [F(retenção)]<sup>n</sup>.</p>
+
+<h3 class="keep">Lista 2 — Questão 4</h3>
+<div class="questao">Sinistros ~ U(0,100). Retenção 80. n=5. M=máx. (a) P(nenhum ultrapassa). (b) P(resseguro acionado ao menos uma vez).</div>
+<p>F(x)=x/100 = F(80)=0,8.</p>
+<p><strong>(a)</strong> P(M&le;80) = (0,8)<sup>5</sup> = <strong>0,3277</strong>. &nbsp; <strong>(b)</strong> P(M&gt;80) = 1 &minus; 0,3277 = <strong>0,6723</strong>.</p>
+
+<h3 class="keep">Lista 2 — Questão 5 (mínimo de exponenciais)</h3>
+<div class="questao">4 carteiras, T~exp (tempo médio 50 meses). T_mín = mín(T1,...,T4). (a) Distribuição de T_mín. (b) P(nenhum evento nos primeiros 10 meses).</div>
+<p><strong>(a)</strong> P(T_mín&gt;t) = (e<sup>&minus;t/50</sup>)<sup>4</sup> = e<sup>&minus;t/12,5</sup> = <strong>Exponencial de média 12,5 meses</strong>.</p>
+<div class="destaque"><strong>Mínimo de n exponenciais (mesma taxa) é exponencial</strong>, com taxa = soma das taxas.</div>
+<p><strong>(b)</strong> P(T_mín&gt;10) = e<sup>&minus;10/12,5</sup> = e<sup>&minus;0,8</sup> aprox. <strong>0,4493</strong>.</p>
+
+<h3 class="keep">Lista 2 — Questão 6 (máximo de Pareto)</h3>
+<div class="questao">X~Pareto, F(x)=1&minus;(10/x)<sup>3</sup>, x&ge;10. n=20. M=máx. P(maior &gt; 50 mil) vs P(um único &gt; 50 mil).</div>
+<p>Cauda P(X&gt;x)=(10/x)<sup>3</sup>. Um único: P(X&gt;50)=(0,2)<sup>3</sup>=<strong>0,008</strong>.</p>
+<p>Máximo: P(M&gt;50) = 1 &minus; (0,992)<sup>20</sup> aprox. <strong>0,1484</strong>.</p>
+<div class="verde"><strong>Comparação:</strong> a chance de algum dos 20 passar de 50 mil (14,8%) é ~18x maior que a de um único (0,8%). É a base do risco de "cauda": eventos raros individualmente tornam-se prováveis no agregado.</div>
+
+<!-- MODULO 10 -->
+<h2>Módulo 10 — Probabilidade Condicional</h2>
+<div class="box-boxed">P(A | B) = P(A e B) / P(B)</div>
+<p>Quando A é mais restritivo que B (ex.: T&ge;50 dentro de T&ge;20), então A e B = A, logo P(T&ge;50 | T&ge;20) = P(T&ge;50)/P(T&ge;20).</p>
+
+<h3 class="keep">Lista 3 — Questão 3</h3>
+<div class="questao">Tempo de vida T ~ U(0,70). Calcule P(T&ge;50 | T&ge;20).</div>
+<p>Para U(0,70): P(T&ge;a) = (70&minus;a)/70. Como 50&gt;20:</p>
+<div class="box-boxed">P(T&ge;50 | T&ge;20) = (20/70)/(50/70) = 20/50 = 0,40</div>
+<div class="destaque"><strong>Sacada:</strong> a uniforme NÃO é "sem memória". P(T&ge;50) incondicional aprox. 0,286, mas condicionada a já ter vivido 20 anos sobe para 0,40. (Só a exponencial é memoryless.)</div>
+
+<!-- RESUMO -->
+<h2>Resumo Final — Cola de Véspera</h2>
+
+<h3>As 6 fórmulas que você NÃO pode esquecer</h3>
+<table>
+  <tr><td>1. Variância</td><td>Var(X) = E(X<sup>2</sup>) &minus; [E(X)]<sup>2</sup></td></tr>
+  <tr><td>2. Transf. linear</td><td>E(aX+b)=aE(X)+b ; Var(aX+b)=a<sup>2</sup>Var(X)</td></tr>
+  <tr><td>3. FGM</td><td>M(t)=E(e<sup>tX</sup>) ; E(X)=M'(0) ; E(X<sup>2</sup>)=M''(0)</td></tr>
+  <tr><td>4. Padronização</td><td>Z=(X&minus;&mu;)/&sigma; ; para média Z=(X&#772;&minus;&mu;)/(&sigma;/sqrt(n))</td></tr>
+  <tr><td>5. Máx / Mín</td><td>P(máx&gt;x)=1&minus;[F]<sup>n</sup> ; P(mín&gt;x)=[1&minus;F]<sup>n</sup></td></tr>
+  <tr><td>6. Exp (cauda)</td><td>P(X&gt;x)=e<sup>&minus;x/média</sup></td></tr>
+</table>
+
+<h3>Teoremas de soma (via FGM)</h3>
+<table>
+  <tr><th>Somando independentes</th><th>Resultado</th></tr>
+  <tr><td>Exponenciais iguais</td><td>Erlang/Gama(n, &beta;)</td></tr>
+  <tr><td>Poissons</td><td>Poisson (soma dos &theta;)</td></tr>
+  <tr><td>Normais</td><td>Normal (soma &mu;, soma &sigma;<sup>2</sup>)</td></tr>
+  <tr><td>Mínimo de exponenciais</td><td>Exponencial (soma das taxas)</td></tr>
+</table>
+
+<h3>Armadilhas que derrubam gente</h3>
+<div class="alerta">
+  &bull; <strong>Convenção da Exponencial:</strong> confira se o número é média ou taxa (média = valor típico citado).<br>
+  &bull; <strong>Prejuízo = valor negativo</strong> no valor esperado.<br>
+  &bull; <strong>Somar constante NÃO muda a variância</strong>.<br>
+  &bull; <strong>Somas de exponenciais só viram Erlang se as médias forem IGUAIS</strong>.<br>
+  &bull; <strong>TCL exige n &ge; 30</strong> — sempre escreva a justificativa.<br>
+  &bull; <strong>"Pelo menos um"</strong> = use o complemento 1 &minus; [...]<sup>n</sup>.
+</div>
+
+<h3>Gabarito-relâmpago</h3>
+<table>
+  <tr><th>Questão</th><th>Resposta</th><th>Questão</th><th>Resposta</th></tr>
+  <tr><td>L1 Q1</td><td>Empresa B (var. nula)</td><td>L3 Q1</td><td>&beta; = 3/32</td></tr>
+  <tr><td>L1 Q2</td><td>x2: méd x2, var x4 / +10: méd+10, var=</td><td>L3 Q2</td><td>M=4/(4&minus;t); E=1/4, Var=1/16</td></tr>
+  <tr><td>L1 Q3</td><td>Obra 1 (82.500)</td><td>L3 Q3</td><td>0,40</td></tr>
+  <tr><td>L1 Q8</td><td>T~N(1500,50000); P aprox. 0,187</td><td>L3 Q4</td><td>P(X&gt;2)=e<sup>&minus;2k</sup></td></tr>
+  <tr><td>L1 Q9</td><td>E=25.000, Var=425M; P(máx) aprox. 0,999</td><td>L3 Q9</td><td>Erlang(3); E=9.000</td></tr>
+  <tr><td>L1 Q10</td><td>Poisson(2,5); P(N&ge;4) aprox. 0,242</td><td>L3 Q10</td><td>Erlang(2); P aprox. 0,69</td></tr>
+  <tr><td>L2 Q1</td><td>N(12000,500<sup>2</sup>); P aprox. 0,023</td><td>L2 Q4</td><td>nenhum 0,328; ao menos 1: 0,672</td></tr>
+  <tr><td>L2 Q2</td><td>aprox. 0,775 (TCL)</td><td>L2 Q5</td><td>Exp média 12,5; P aprox. 0,449</td></tr>
+  <tr><td>L2 Q3</td><td>aprox. 0,905</td><td>L2 Q6</td><td>um 0,008; máx 0,148</td></tr>
+</table>
+
+<div class="verde" style="margin-top:24px;">
+  <strong>Conselho final:</strong> não decore contas — decore as 6 fórmulas-chave e as duas tabelas (distribuições + FGMs). Refaça no papel L3 Q2, L1 Q10 e L2 Q1: se acertar essas três, você domina os pilares (FGM, soma, TCL). E durma bem. Você consegue!
+</div>
+
+<hr>
+<p style="text-align:center; color:#888; font-size:12px;">Material de estudo gerado para revisão · Estatística Inferencial · Mirador</p>
+
+</div>
+</body>
+</html>
